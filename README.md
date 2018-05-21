@@ -15,12 +15,12 @@ npm install --save worldwind-react-globe
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'worldwind-react-globe'
+import Globe from 'worldwind-react-globe'
 
 class Example extends Component {
   render () {
     return (
-      <MyComponent />
+      <Globe id="elementId" />
     )
   }
 }
