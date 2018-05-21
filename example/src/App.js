@@ -46,10 +46,9 @@ export default class App extends Component {
         // The id prop defines the element id for the Globe's canvas and is required.
         // The projection prop is optional, 3D is the default.
         return (
-            <div className="fullsize">
+            <div className="container">
                 <Globe 
                     ref={this.globeRef}
-                    id="globe-canvas"
                     projection="3D"/>
             </div>
         )
