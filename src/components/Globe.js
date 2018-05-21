@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import WorldWindFixes from '../api/WorldWindFixes';
 import './Globe.css';
-//import styles from '../styles.css'
 import styles from './Globe.css'
 
 export default class Globe extends Component {
@@ -48,11 +47,17 @@ export default class Globe extends Component {
         "South Gnomonic"
     ];
 
+    /**
+     * Switches between a 3D round globe and 2D flat globe projections.
+     * @param {String} projectionName One of the projectionName[] strings
+     */
     changeProjection(projectionName) {
-        if (projectionName === "3D") {
+        const projection = projectionName.toUpperCase();
+        if (projection === "3D") {
             if (!this.roundGlobe) {
                 this.roundGlobe = new WorldWind.Globe(new WorldWind.EarthElevationModel());
             }
+            // Replace the flat globe
             if (this.wwd.globe !== this.roundGlobe) {
                 this.wwd.globe = this.roundGlobe;
             }
@@ -60,23 +65,25 @@ export default class Globe extends Component {
             if (!this.flatGlobe) {
                 this.flatGlobe = new WorldWind.Globe2D();
             }
-            if (projectionName === "Equirectangular") {
+            // Create the projection used by the flat globe
+            if (projection === "EQUIRECTANGULAR") {
                 this.flatGlobe.projection = new WorldWind.ProjectionEquirectangular();
-            } else if (projectionName === "Mercator") {
+            } else if (projection === "MERCATOR") {
                 this.flatGlobe.projection = new WorldWind.ProjectionMercator();
-            } else if (projectionName === "North Polar") {
+            } else if (projection === "NORTH POLAR") {
                 this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("North");
-            } else if (projectionName === "South Polar") {
+            } else if (projection === "SOUTH POLAr") {
                 this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("South");
-            } else if (projectionName === "North UPS") {
+            } else if (projection === "NORTH UPS") {
                 this.flatGlobe.projection = new WorldWind.ProjectionUPS("North");
-            } else if (projectionName === "South UPS") {
+            } else if (projection === "SOUTH UPS") {
                 this.flatGlobe.projection = new WorldWind.ProjectionUPS("South");
-            } else if (projectionName === "North Gnomonic") {
+            } else if (projection === "NORTH GNOMONIC") {
                 this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("North");
-            } else if (projectionName === "South Gnomonic") {
+            } else if (projection === "SOUTH GNOMONIC") {
                 this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("South");
             }
+            // Replace the 3D globe
             if (this.wwd.globe !== this.flatGlobe) {
                 this.wwd.globe = this.flatGlobe;
             }
@@ -255,6 +262,7 @@ export default class Globe extends Component {
         console.log("componentDidMount")
         // Apply post-release fixes to the WorldWind library before creating a WorldWindow
         WorldWindFixes.applyLibraryFixes();
+        
         // Initialize WorldWind URL for library resources
         WorldWind.configuration.baseUrl = 'https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/';
         
