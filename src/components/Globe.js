@@ -3,7 +3,6 @@ import WorldWind from '@nasaworldwind/worldwind';
 import PropTypes from 'prop-types';
 
 import WorldWindFixes from '../api/WorldWindFixes';
-import './Globe.css';
 import styles from './Globe.css'
 
 export default class Globe extends Component {
@@ -12,7 +11,7 @@ export default class Globe extends Component {
         this.state = {
             isValid: false,
             isDropArmed: false
-        };
+        };  
         // The WorldWindow
         this.wwd = null;
 
@@ -135,15 +134,17 @@ export default class Globe extends Component {
                 layer[prop] = options[prop];
             }
         }
-        // Assign a category property for layer management 
+        // Assign a default category property for layer management 
         if (typeof layer.category === 'undefined') {
             layer.category = 'overlay'; // default category
         }
-
-        // Assign a unique layer ID to ease layer management 
+        // Assign a unique layer ID for layer management 
         layer.uniqueId = this.nextLayerId++;
+        
         // Add the layer to the globe
         this.wwd.addLayer(layer);
+        this.wwd.redraw();
+        
         // Signal a change in the category
         this.updateCategoryTimestamp(layer.category);
 
@@ -225,7 +226,6 @@ export default class Globe extends Component {
      * @param {Object} event
      */
     handleGlobeClick(event) {
-        console.log("click");
         if (!this.state.isDropArmed) {
             return;
         }
@@ -259,12 +259,9 @@ export default class Globe extends Component {
     }
     
     componentDidMount() {
-        console.log("componentDidMount")
+     
         // Apply post-release fixes to the WorldWind library before creating a WorldWindow
         WorldWindFixes.applyLibraryFixes();
-        
-        // Initialize WorldWind URL for library resources
-        WorldWind.configuration.baseUrl = 'https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/';
         
         // Create the WorldWindow using the ID of the canvas
         this.wwd = new WorldWind.WorldWindow(this.props.id);
