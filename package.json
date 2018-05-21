@@ -1,6 +1,6 @@
 {
   "name": "worldwind-react-globe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React Globe component with a 3D virtual globe or 2D map built with NASA WorldWind.",
   "keywords": [
     "globe",
