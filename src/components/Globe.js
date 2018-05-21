@@ -14,6 +14,7 @@ export default class Globe extends Component {
         };  
         // The WorldWindow
         this.wwd = null;
+        this.canvasId = this.props.canvasId || 'canvas_' + Date.now();
 
         // Layer managment support
         this.nextLayerId = 1;
@@ -29,12 +30,12 @@ export default class Globe extends Component {
     }
 
     static propTypes = {
-        id: PropTypes.string.isRequired, // element id of Globe's canvas
+        canvasId: PropTypes.string,     // id of existing canvas
         projection: PropTypes.string,
         onUpdate: PropTypes.func
     }
 
-    static projectionNames = [
+    static projections = [
         "3D",
         "Equirectangular",
         "Mercator",
@@ -44,15 +45,16 @@ export default class Globe extends Component {
         "South UPS",
         "North Gnomonic",
         "South Gnomonic"
-    ];
+    ]
 
     /**
      * Switches between a 3D round globe and 2D flat globe projections.
-     * @param {String} projectionName One of the projectionName[] strings
+     * @param {String|Number} projection A projections[] string or index
      */
-    changeProjection(projectionName) {
-        const projection = projectionName.toUpperCase();
-        if (projection === "3D") {
+    changeProjection(projection) {
+        const proj = (typeof projection === 'number' ? Globe.projections[projection] : projection); 
+            
+        if (proj === "3D") {
             if (!this.roundGlobe) {
                 this.roundGlobe = new WorldWind.Globe(new WorldWind.EarthElevationModel());
             }
@@ -65,21 +67,21 @@ export default class Globe extends Component {
                 this.flatGlobe = new WorldWind.Globe2D();
             }
             // Create the projection used by the flat globe
-            if (projection === "EQUIRECTANGULAR") {
+            if (proj === "EQUIRECTANGULAR") {
                 this.flatGlobe.projection = new WorldWind.ProjectionEquirectangular();
-            } else if (projection === "MERCATOR") {
+            } else if (proj === "MERCATOR") {
                 this.flatGlobe.projection = new WorldWind.ProjectionMercator();
-            } else if (projection === "NORTH POLAR") {
+            } else if (proj === "NORTH POLAR") {
                 this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("North");
-            } else if (projection === "SOUTH POLAr") {
+            } else if (proj === "SOUTH POLAr") {
                 this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("South");
-            } else if (projection === "NORTH UPS") {
+            } else if (proj === "NORTH UPS") {
                 this.flatGlobe.projection = new WorldWind.ProjectionUPS("North");
-            } else if (projection === "SOUTH UPS") {
+            } else if (proj === "SOUTH UPS") {
                 this.flatGlobe.projection = new WorldWind.ProjectionUPS("South");
-            } else if (projection === "NORTH GNOMONIC") {
+            } else if (proj === "NORTH GNOMONIC") {
                 this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("North");
-            } else if (projection === "SOUTH GNOMONIC") {
+            } else if (proj === "SOUTH GNOMONIC") {
                 this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("South");
             }
             // Replace the 3D globe
@@ -264,7 +266,7 @@ export default class Globe extends Component {
         WorldWindFixes.applyLibraryFixes();
         
         // Create the WorldWindow using the ID of the canvas
-        this.wwd = new WorldWind.WorldWindow(this.props.id);
+        this.wwd = new WorldWind.WorldWindow(this.canvasId);
 
         // Apply post-release fixes to the WorldWindow
         WorldWindFixes.applyWorldWindowFixes(this.wwd);
@@ -303,7 +305,7 @@ export default class Globe extends Component {
             cursor: (this.state.isDropArmed ? 'cursor-crosshair' : 'cursor-default')
         };
         return(
-            <canvas id={this.props.id} className={styles.canvasGlobe}>
+            <canvas id={this.canvasId} className={styles.canvasGlobe}>
                 Your browser does not support HTML5 Canvas.
             </canvas>
         );
