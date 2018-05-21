@@ -2,10 +2,15 @@
   "name": "worldwind-react-globe",
   "version": "0.1.0",
   "description": "This React Globe component is a 3D virtual globe built with NASA WorldWind.",
-  "author": "emxsys",
+  "homepage": "https://emxsys.github.io/worldwind-react-globe",
+  "bugs": "https://github.com/emxsys/worldwind-react-globe/issues",
+  "author": "Bruce Schubert",
   "license": "MIT",
-  "repository": "emxsys/worldwind-react-globe",
-  "main": "dist/index.js",
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://github.com/emxsys/worldwind-react-globe.git"
+  },
+  "browser": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
