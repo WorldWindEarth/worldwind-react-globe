@@ -1,7 +1,7 @@
-import ExampleComponent from './'
+import Globe from './components/Globe';
 
-describe('ExampleComponent', () => {
-  it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
-  })
-})
+describe('Globe', () => {
+    it('is truthy', () => {
+        expect(Globe).toBeTruthy();
+    });
+});

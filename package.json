@@ -1,7 +1,7 @@
 {
   "name": "worldwind-react-globe",
-  "version": "1.0.0",
-  "description": "React Globe component using NASA WorldWind",
+  "version": "0.1.0",
+  "description": "This React Globe component is a 3D virtual globe built with NASA WorldWind.",
   "author": "emxsys",
   "license": "MIT",
   "repository": "emxsys/worldwind-react-globe",
@@ -17,7 +17,9 @@
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@nasaworldwind/worldwind": "^0.9.0"
+  },
   "peerDependencies": {
     "prop-types": "^15.5.4",
     "react": "^15.0.0 || ^16.0.0",
@@ -25,7 +27,7 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.1",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",

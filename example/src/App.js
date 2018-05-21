@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 
-import ExampleComponent from 'worldwind-react-globe'
+import Globe from 'worldwind-react-globe'
 
 export default class App extends Component {
-  render () {
-    return (
-      <div>
-        <ExampleComponent text='Modern React component module' />
-      </div>
-    )
-  }
+    render () {
+        const divStyle = {
+            width: '100vw',
+            height: '100vh'
+        };
+
+        return (
+            <div style={divStyle}>
+                <Globe id="globe-canvas" />
+            </div>
+        )
+    }
 }
