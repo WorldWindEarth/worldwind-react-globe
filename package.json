@@ -6,11 +6,11 @@
   "bugs": "https://github.com/emxsys/worldwind-react-globe/issues",
   "author": "Bruce Schubert",
   "license": "MIT",
-  "repository" : { 
-    "type" : "git",
-    "url" : "https://github.com/emxsys/worldwind-react-globe.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emxsys/worldwind-react-globe.git"
   },
-  "browser": "dist/index.js",
+  "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
