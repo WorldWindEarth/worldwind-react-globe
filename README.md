@@ -13,29 +13,51 @@ npm install --save worldwind-react-globe
 
 ## Usage
 
+### Simplest Example
+
+Create a Globe using the defaults.
+
 ```jsx
 import React, { Component } from 'react'
 
 import Globe from 'worldwind-react-globe'
 
-import 'App.css'
+class App extends Component {
+    render () {
+        return (
+            <div style={width: '100vw', height: '100vh'}>
+                <Globe />
+            </div>
+        )
+    }
+}
+```
+
+### Typical Usage
+
+Creates a Globe that fills the page.
+
+- Uses a `ref` object to access the Globe after mounting
+- Sets the WorldWind `baseUrl` property prior to use
+- After mounting the Globe
+
+
+```jsx
+import React, { Component } from 'react'
+
+import Globe from 'worldwind-react-globe'
+
+/* global WorldWind */
 
 class App extends Component {
     constructor(props) {
         super(props);
-        
-        // Holds a reference to the Globe component after mounting
+        // A reference to the Globe component after mounting
         this.globeRef = React.createRef();
-        
-        // Define the WorldWind base URL for image resources.
-        // As an alternative, you can copy the images folder from 
-        // https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/
-        // to the root of your web app (e.g., to public)
-        WorldWind.configuration.baseUrl = 'https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/';
     }        
 
     componentDidMount() {
-        // Get the Globe component with the WorldWindow after mounting
+        // Get the Globe component with the WorldWindow (wwd) after mounting
         const globe = this.globeRef.current;
         
         // Define layers to be added to the globe
@@ -57,9 +79,7 @@ class App extends Component {
     render () {
         return (
             <div className="container">
-                <Globe 
-                    ref={this.globeRef}
-                    projection="3D"/>
+                <Globe ref={this.globeRef}/>
             </div>
         )
     }
