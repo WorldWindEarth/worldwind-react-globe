@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import WorldWind from '@nasaworldwind/worldwind';
 import PropTypes from 'prop-types';
+import '@nasaworldwind/worldwind';
 
 import WorldWindFixes from '../api/WorldWindFixes';
 import styles from './Globe.css'
+
+/* global WorldWind */
 
 export default class Globe extends Component {
     constructor(props) {
@@ -12,6 +14,12 @@ export default class Globe extends Component {
             isValid: false,
             isDropArmed: false
         };  
+        
+        // Define the default path to WorldWind images folder.
+        if (!Globe.isBaseUrlSet) {
+            Globe.setBaseUrl('https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/');
+        }
+        
         // The WorldWindow
         this.wwd = null;
         this.canvasId = this.props.canvasId || 'canvas_' + Date.now();
@@ -26,9 +34,9 @@ export default class Globe extends Component {
 
         // Click/Drop support
         this.dropCallback = null;
-                
+        
     }
-
+    
     static propTypes = {
         canvasId: PropTypes.string,     // id of existing canvas
         projection: PropTypes.string,
@@ -46,7 +54,17 @@ export default class Globe extends Component {
         "North Gnomonic",
         "South Gnomonic"
     ]
-
+    
+    /**
+     * Specify the location of the WorldWind images folder.
+     * E.g., 'https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/'
+     */
+    static setBaseUrl(baseUrl) {
+        WorldWind.configuration.baseUrl = baseUrl;
+        Globe.isBaseUrlSet = true;
+    }
+    static isBaseUrlSet = false;
+    
     /**
      * Switches between a 3D round globe and 2D flat globe projections.
      * @param {String|Number} projection A projections[] string or index

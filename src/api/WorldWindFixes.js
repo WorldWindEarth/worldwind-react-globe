@@ -4,7 +4,9 @@
  * http://www.opensource.org/licenses/mit-license
  */
 
-import WorldWind from '@nasaworldwind/worldwind';
+import '@nasaworldwind/worldwind';
+
+/* global WorldWind */
 
 const TILE_CACHE_CAPACITY = 4e6;
 const TILE_CACHE_LOW_WATER = 3.5e6;
