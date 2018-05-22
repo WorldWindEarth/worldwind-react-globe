@@ -1,15 +1,16 @@
 {
   "name": "worldwind-react-globe-example",
   "homepage": "https://emxsys.github.io/worldwind-react-globe",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "private": false,
   "license": "MIT",
   "dependencies": {
+    "ajv": "^6.5.0",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "worldwind-react-globe": "*",
-    "react-scripts": "^1.1.1"
+    "react-scripts": "^1.1.1",
+    "worldwind-react-globe": "^0.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
