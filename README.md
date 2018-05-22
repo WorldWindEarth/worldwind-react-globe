@@ -1,4 +1,4 @@
-# worldwind-react-globe
+# worldwind-react-globe ([demo](https://emxsys.github.io/worldwind-react-globe/))
 
 > A Globe component for React built with [NASA WorldWind](https://worldwind.arc.nasa.gov/web/).
 >
@@ -19,13 +19,12 @@ Create a Globe using the defaults.
 
 ```jsx
 import React, { Component } from 'react'
-
 import Globe from 'worldwind-react-globe'
 
 class App extends Component {
     render () {
         return (
-            <div style={width: '100vw', height: '100vh'}>
+            <div>
                 <Globe />
             </div>
         )
@@ -44,8 +43,8 @@ Creates a Globe that fills the page.
 
 ```jsx
 import React, { Component } from 'react'
-
 import Globe from 'worldwind-react-globe'
+import './App.css'
 
 /* global WorldWind */
 
