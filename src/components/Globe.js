@@ -22,7 +22,10 @@ import styles from './Globe.css'
       isValid: false,
       isDropArmed: false
     };
-
+    
+    // Apply post-release fixes to the WorldWind library before creating a WorldWindow
+    WorldWindFixes.applyLibraryFixes();
+    
     // Define the default path to WorldWind images folder.
     if (!Globe.isBaseUrlSet) {
       Globe.setBaseUrl('https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/');
@@ -163,6 +166,7 @@ import styles from './Globe.css'
     let layers = this.wwd.layers.filter(layer => layer.displayName === name);
     return layers.length > 0 ? layers[0] : null;
   }
+  
   /**
    * Add a layer to the globe and applies options object properties to the 
    * the layer.
@@ -347,10 +351,17 @@ import styles from './Globe.css'
     event.stopImmediatePropagation();
   }
 
-  componentDidMount() {
+  
 
-    // Apply post-release fixes to the WorldWind library before creating a WorldWindow
-    WorldWindFixes.applyLibraryFixes();
+  shouldComponentUpdate(nextProps, nextState) {
+    // TODO: handle changes in the layers
+    if (nextProps.layers) {
+      nextProps.layers.forEach(layer => console.log(layer));
+    }
+    return true;
+  }
+
+  componentDidMount() {
 
     // Create the WorldWindow using the ID of the canvas
     this.wwd = new WorldWind.WorldWindow(this.canvasId);
@@ -375,15 +386,23 @@ import styles from './Globe.css'
       minActiveAltitude: 0}   // override the default value of 3e6;
     );
 
-
     // Add any supplied layer configurations to the globe
     if (this.props.layers) {
-      this.props.layers.forEach(config => this.addLayer(config.layer, config.options));
+      this.props.layers.forEach(config =>
+        switch(typeof config) {
+          case string:
+          case number:
+          case WorldWind.Layer: 
+            this.addLayer(config);
+            break;
+          default:
+            this.addLayer(config.layer, config.options);
+        }
+      );
     }
 
     // Update state
-    this.setState({isValid: true});
-
+    this.setState({isValid: true}
   }
 
   render() {
