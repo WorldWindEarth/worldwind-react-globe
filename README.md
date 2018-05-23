@@ -100,6 +100,25 @@ export default class App extends Component {
 }
 ```
 
+### Default Layers
+
+Identifier | Description
+---------- | --------------
+Blue Marble | Blue Marble Next Generation (BMNG)
+Blue Marble and LandSat | BMNG for oceans and seas with LandSat for land masses
+Bing Aerial | Bing aerial imagery
+Bing Aerial with Labels | Bing aerial imagery with road and place name labels
+Bing Roads | Bing road map
+EOX Sentinal2 | Sentinal 2 imagery from EOX IT Services GmbH
+EOX Sentinal2 with Labels | Sentinal 2 imagery with OpenStreetMap overlay from EOX IT Services GmbH
+EOX OpenStreetMap | OpenStreetMap overlay from EOX IT Services GmbH
+Compass | A compass displayed in upper right
+Coordinates | View coordinates displayed on top or bottom of screen
+View Controls | View controls displayed in bottom left
+Atmosphere | Atmosphere and day/night effects
+Stars | Background star field
+Tessellation | Shows terrain tessellation
+
 ## License
 
 MIT © [Bruce Schubert](https://github.com/emxsys)
