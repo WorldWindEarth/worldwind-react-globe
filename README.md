@@ -56,7 +56,7 @@ export default class App extends Component {
     }        
          
     componentDidMount() {
-        // Get the Globe component with the WorldWindow (wwd) after mounting
+        // Get the Globe component fter mounting
         const globe = this.globeRef.current;
         
         // Define layers to be added to the globe. 
@@ -104,20 +104,20 @@ export default class App extends Component {
 
 Identifier | Description
 ---------- | --------------
-Blue Marble | Blue Marble Next Generation (BMNG)
-Blue Marble and LandSat | BMNG for oceans and seas with LandSat for land masses
-Bing Aerial | Bing aerial imagery
-Bing Aerial with Labels | Bing aerial imagery with road and place name labels
-Bing Roads | Bing road map
-EOX Sentinal2 | Sentinal 2 imagery from EOX IT Services GmbH
-EOX Sentinal2 with Labels | Sentinal 2 imagery with OpenStreetMap overlay from EOX IT Services GmbH
-EOX OpenStreetMap | OpenStreetMap overlay from EOX IT Services GmbH
-Compass | A compass displayed in upper right
-Coordinates | View coordinates displayed on top or bottom of screen
-View Controls | View controls displayed in bottom left
-Atmosphere | Atmosphere and day/night effects
-Stars | Background star field
-Tessellation | Shows terrain tessellation
+__Blue Marble__ | Blue Marble Next Generation (BMNG)
+__Blue Marble and LandSat__ | BMNG for oceans and seas with LandSat for land masses
+__Bing Aerial__ | Bing aerial imagery
+__Bing Aerial with Labels__ | Bing aerial imagery with road and place name labels
+__Bing Roads__ | Bing road map
+__EOX Sentinal2__ | Sentinal 2 imagery from EOX IT Services GmbH
+__EOX Sentinal2 with Labels__ | Sentinal 2 imagery with OpenStreetMap overlay from EOX IT Services GmbH
+__EOX OpenStreetMap__ | OpenStreetMap overlay from EOX IT Services GmbH
+__Compass__ | A compass displayed in upper right
+__Coordinates__ | View coordinates displayed on top or bottom of screen
+__View Controls__ | View controls displayed in bottom left
+__Atmosphere__ | Atmosphere and day/night effects
+__Stars__ | Background star field
+__Tessellation__ | Shows terrain tessellation
 
 ## License
 
