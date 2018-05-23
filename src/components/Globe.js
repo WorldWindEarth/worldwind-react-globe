@@ -79,7 +79,7 @@ import styles from './Globe.css'
     "Compass",
     "Coordinates",
     "View Controls",
-    "Atmosphere",
+    "Atmosphere and Day/Night",
     "Stars",
     "Tessellation"
   ];
@@ -209,13 +209,16 @@ import styles from './Globe.css'
         layer = new WorldWind.CoordinatesDisplayLayer(this.wwd);
       } else if (name === "View Controls") {
         layer = new WorldWind.ViewControlsLayer(this.wwd);
-      } else if (name === "Atmosphere") {
+      } else if (name === "Atmosphere and Day/Night") {
         layer = new EnhancedAtmosphereLayer();
       } else if (name === "Stars") {
         layer = new WorldWind.StarFieldLayer();
       } else if (name === "Tessellation") {
         layer = new WorldWind.ShowTessellationLayer();
+      } else {
+        console.error("Globe.addLayer() layer name not found: " + name);
       }
+        
     }
 
     // Copy all properties defined on the options object to the layer
@@ -389,20 +392,25 @@ import styles from './Globe.css'
     // Add any supplied layer configurations to the globe
     if (this.props.layers) {
       this.props.layers.forEach(config =>
-        switch(typeof config) {
-          case string:
-          case number:
-          case WorldWind.Layer: 
+        { switch(typeof config) {
+          case 'string':
+          case 'number':
             this.addLayer(config);
             break;
-          default:
-            this.addLayer(config.layer, config.options);
+          case 'object':
+            if (config instanceof WorldWind.Layer) {
+              this.addLayer(config);
+            } else {
+              this.addLayer(config.layer, config.options);
+            }
+            break;
+          }
         }
       );
     }
 
     // Update state
-    this.setState({isValid: true}
+    this.setState({isValid: true});
   }
 
   render() {
