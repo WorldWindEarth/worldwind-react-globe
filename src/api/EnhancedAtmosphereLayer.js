@@ -3,8 +3,9 @@
  * The MIT License
  * http://www.opensource.org/licenses/mit-license
  */
-import WorldWind from '@nasaworldwind/worldwind';
+import '@nasaworldwind/worldwind';
 
+/* global WorldWind */
 
 export default class EnhancedAtmosphereLayer extends WorldWind.AtmosphereLayer {
     constructor(url) {

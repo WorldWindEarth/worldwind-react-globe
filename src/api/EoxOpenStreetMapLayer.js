@@ -3,9 +3,11 @@
  * The MIT License
  * http://www.opensource.org/licenses/mit-license
  */
-import WorldWind from '@nasaworldwind/worldwind';
+import '@nasaworldwind/worldwind';
 
 import EnhancedWmsLayer from './EnhancedWmsLayer';
+
+/* global WorldWind */
 
 export default class EoxOpenStreetMapLayer extends EnhancedWmsLayer {
     constructor() {

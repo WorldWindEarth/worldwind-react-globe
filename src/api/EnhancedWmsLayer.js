@@ -1,10 +1,11 @@
 /* 
- * Copyright (c) 2017 Bruce Schubert.
+ * Copyright (c) 2018 Bruce Schubert.
  * The MIT License
  * http://www.opensource.org/licenses/mit-license
  */
-import WorldWind from '@nasaworldwind/worldwind';
+import '@nasaworldwind/worldwind';
 
+/* global WorldWind */
 export default class EnhancedWmsLayer extends WorldWind.WmsLayer {
     constructor(config, timeString) {
         super(config, timeString);
