@@ -1,6 +1,6 @@
 {
   "name": "worldwind-react-globe",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A NASA WorldWind 3D virtual globe for React featuring maps, imagery and terrain plus 2D map projections.",
   "keywords": [
     "react",
