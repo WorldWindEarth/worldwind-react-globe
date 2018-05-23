@@ -175,7 +175,7 @@ import styles from './Globe.css'
       // Transform layer index into a layer string identifier
       layer = Globe.defaultLayers[layer];
     }
-    if (typeof layer === 'string') { 
+    if (typeof layer === 'string') {
       // Ensure layer name is a value contained in the layers array
       const name = Globe.defaultLayers.find(name => name.includes(layer));
       if (name === 'undefined') {
@@ -369,17 +369,21 @@ import styles from './Globe.css'
     this.wwd.addEventListener('touchend', (e) => this.handleGlobeClick(e));
 
     // Add a low-res background layer that's always available
-    this.addLayer(new WorldWind.BMNGOneImageLayer(),
-      {
-        category: "background",
-        enabled: true,
-        minActiveAltitude: 0    // override the default value of 3e6;
-      });
+    this.addLayer(new WorldWind.BMNGOneImageLayer(), {
+      category: "background",
+      enabled: true,
+      minActiveAltitude: 0}   // override the default value of 3e6;
+    );
+
+
+    // Add any supplied layer configurations to the globe
+    if (this.props.layers) {
+      this.props.layers.forEach(config => this.addLayer(config.layer, config.options));
+    }
 
     // Update state
     this.setState({isValid: true});
 
-    console.log("layers: " + this.wwd.layers.length);
   }
 
   render() {

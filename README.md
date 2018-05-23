@@ -36,7 +36,6 @@ class App extends Component {
 
 Creates a Globe that fills the page.
 
-- Uses a `ref` object to access the Globe after mounting
 - Adds layers to the Globe using layer identifiers defined in `Globe.defaultLayers`
 
 ##### App.js
@@ -49,19 +48,10 @@ import Globe from 'worldwind-react-globe'
 import './App.css'
 
 export default class App extends Component {
-    constructor(props) {
-        super(props);
-        // Holds a reference to the Globe component after mounting
-        this.globeRef = React.createRef();
-    }        
-         
-    componentDidMount() {
-        // Get the Globe component fter mounting
-        const globe = this.globeRef.current;
         
-        // Define layers to be added to the globe. 
+    render () {
         // See Globe.defaultLayers for a list of valid string identifiers
-        const layerConfig = [ 
+        const layers = [ 
             {layer: "Sentinal2 with Labels",  // partial names are ok
                 options: {category: "base", enabled: true}},
             {layer: "Compass",
@@ -73,16 +63,11 @@ export default class App extends Component {
             {layer: "Stars",
                 options: {category: "setting", enabled: false, displayName: "Stars"}},
         ];
-
-        // Add the layers to the globe
-        layerConfig.forEach(config => globe.addLayer(config.layer, config.options));
-    }
-    
-    render () {
         // Create a Globe in a div that fills the viewport.
         return (
             <div className="container">
-                <Globe ref={this.globeRef}/>
+                <Globe 
+                  layers={layers}/>
             </div>
         )
     }
@@ -108,10 +93,10 @@ __Blue Marble__ | Blue Marble Next Generation (BMNG)
 __Blue Marble and LandSat__ | BMNG for oceans and seas with LandSat for land masses
 __Bing Aerial__ | Bing aerial imagery
 __Bing Aerial with Labels__ | Bing aerial imagery with road and place name labels
-__Bing Roads__ | Bing road map
+__Bing Roads__ | Bing roads map
 __EOX Sentinal2__ | Sentinal 2 imagery from EOX IT Services GmbH
 __EOX Sentinal2 with Labels__ | Sentinal 2 imagery with OpenStreetMap overlay from EOX IT Services GmbH
-__EOX OpenStreetMap__ | OpenStreetMap overlay from EOX IT Services GmbH
+__EOX OpenStreetMap__ | OpenStreetMap from EOX IT Services GmbH
 __Compass__ | A compass displayed in upper right
 __Coordinates__ | View coordinates displayed on top or bottom of screen
 __View Controls__ | View controls displayed in bottom left
