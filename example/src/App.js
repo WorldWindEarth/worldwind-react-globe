@@ -26,8 +26,7 @@ export default class App extends Component {
     ];
     return (
       <div className="fullscreen">
-          <Globe 
-              layers={layers}/>
+          <Globe layers={layers}/>
       </div>
       )
   }
