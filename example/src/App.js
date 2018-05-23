@@ -3,9 +3,6 @@ import Globe from 'worldwind-react-globe'
 
 import './App.css'
 
-// WorldWind global is defined in the @nasaworldwind/worldwind module imported by Globe
-/* global WorldWind */ 
-
 export default class App extends Component {
         
     constructor(props) {
@@ -18,18 +15,19 @@ export default class App extends Component {
         // Get the Globe component with the WorldWindow (wwd) after mounting
         const globe = this.globeRef.current;
         
-        // Define layers to be added to the globe.
-        const layerConfig = [
-            {layer: new WorldWind.BMNGLandsatLayer(),
+        // Define layers to be added to the globe. 
+        // See Globe.defaultLayers for a list of valid string identifiers
+        const layerConfig = [ 
+            {layer: "Sentinal2 with Labels",  // partial names are ok
                 options: {category: "base", enabled: true}},
-            {layer: new WorldWind.CompassLayer(),
-                options: {category: "setting", enabled: false}},
-            {layer: new WorldWind.CoordinatesDisplayLayer(globe.wwd),
+            {layer: "Compass",
                 options: {category: "setting", enabled: true}},
-            {layer: new WorldWind.ViewControlsLayer(globe.wwd),
+            {layer: "Coordinates",
                 options: {category: "setting", enabled: true}},
-            {layer: new WorldWind.StarFieldLayer(),
-                options: {category: "setting", enabled: true, displayName: "Stars"}},
+            {layer: "View Controls",
+                options: {category: "setting", enabled: true}},
+            {layer: "Stars",
+                options: {category: "setting", enabled: false, displayName: "Stars"}},
         ];
         // Add the layers to the globe
         layerConfig.forEach(config => globe.addLayer(config.layer, config.options));
