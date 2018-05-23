@@ -37,7 +37,7 @@ class App extends Component {
 Creates a Globe that fills the page.
 
 - Uses a `ref` object to access the Globe after mounting
-- Added layers to the Globe using layer identifiers defined in `Globe.defaultLayers`
+- Adds layers to the Globe using layer identifiers defined in `Globe.defaultLayers`
 
 ##### App.js
 
