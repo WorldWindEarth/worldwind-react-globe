@@ -1,3 +1,8 @@
+/* 
+ * Copyright (c) 2018 Bruce Schubert.
+ * The MIT License
+ * http://www.opensource.org/licenses/mit-license
+ */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import '@nasaworldwind/worldwind';
@@ -22,10 +27,10 @@ import styles from './Globe.css'
       isValid: false,
       isDropArmed: false
     };
-    
+
     // Apply post-release fixes to the WorldWind library before creating a WorldWindow
     WorldWindFixes.applyLibraryFixes();
-    
+
     // Define the default path to WorldWind images folder.
     if (!Globe.isBaseUrlSet) {
       Globe.setBaseUrl('https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/');
@@ -49,9 +54,13 @@ import styles from './Globe.css'
   }
 
   static propTypes = {
-    canvasId: PropTypes.string, // id of an existing canvas
-    projection: PropTypes.string,
+    /** The id of an existing canvas to attach the Globe */
+    canvasId: PropTypes.string,
+    /** An array of layer identifier strings or layer configuration object */
     layers: PropTypes.array,
+    /** A projection identifier string */
+    projection: PropTypes.string,
+    /** A call back function to push state up to the parent */
     onUpdate: PropTypes.func
   }
 
@@ -144,29 +153,28 @@ import styles from './Globe.css'
    * @returns {Array}
    */
   getLayers(category) {
-    return this.wwd.layers.filter(layer => layer.category === category);
+    if (category) {
+      return this.wwd.layers.filter(layer => layer.category === category);
+    } else {
+      return this.wwd.layers;
+    }
   }
 
   /**
-   * Returns the layer with the given id.
-   * @param {Number} id Unique layer id assigned by addLayer
+   * Returns the first layer with the given name or the layer with the given id.
+   * @param {String|Number} nameOrId Layer name string or unique layer id number
    * @returns {WorldWind.Layer|null}
    */
-  getLayer(id) {
-    let layers = this.wwd.layers.filter(layer => layer.uniqueId === id);
+  getLayer(nameOrId) {
+    let layers = null;
+    if (typeof nameOrId === 'string') {
+      layers = this.wwd.layers.filter(layer => layer.displayName === nameOrId);
+    } else {
+      layers = this.wwd.layers.filter(layer => layer.uniqueId === nameOrId);
+    }
     return layers.length > 0 ? layers[0] : null;
   }
 
-  /**
-   * Returns the first layer with the given name.
-   * @param {String} name
-   * @returns {WorldWind.Layer|null}
-   */
-  findLayerByName(name) {
-    let layers = this.wwd.layers.filter(layer => layer.displayName === name);
-    return layers.length > 0 ? layers[0] : null;
-  }
-  
   /**
    * Add a layer to the globe and applies options object properties to the 
    * the layer.
@@ -218,7 +226,6 @@ import styles from './Globe.css'
       } else {
         console.error("Globe.addLayer() layer name not found: " + name);
       }
-        
     }
 
     // Copy all properties defined on the options object to the layer
@@ -306,9 +313,9 @@ import styles from './Globe.css'
     }
   }
 
-  goTo(latitude, longitude) {
-    const location = new WorldWind.Location(latitude, longitude);
-    this.wwd.goTo(location);
+  goTo(latitude, longitude, range) {
+    const position = new WorldWind.Position(latitude, longitude, range);
+    this.wwd.goTo(position);
   }
 
   activateClickDrop(dropCallback) {
@@ -354,8 +361,6 @@ import styles from './Globe.css'
     event.stopImmediatePropagation();
   }
 
-  
-
   shouldComponentUpdate(nextProps, nextState) {
     // TODO: handle changes in the layers
     if (nextProps.layers) {
@@ -392,7 +397,8 @@ import styles from './Globe.css'
     // Add any supplied layer configurations to the globe
     if (this.props.layers) {
       this.props.layers.forEach(config =>
-        { switch(typeof config) {
+      {
+        switch (typeof config) {
           case 'string':
           case 'number':
             this.addLayer(config);
@@ -404,8 +410,8 @@ import styles from './Globe.css'
               this.addLayer(config.layer, config.options);
             }
             break;
-          }
         }
+      }
       );
     }
 
