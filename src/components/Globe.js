@@ -370,7 +370,6 @@ import styles from './Globe.css'
   }
 
   componentDidMount() {
-
     // Create the WorldWindow using the ID of the canvas
     this.wwd = new WorldWind.WorldWindow(this.canvasId);
 
@@ -420,11 +419,14 @@ import styles from './Globe.css'
   }
 
   render() {
-    // JSX code to create canvas for the WorldWindow
-
+    // Use an existing canvas if provided
+    if (this.props.canvasId) {
+      return null;
+    }
+    // Otherwise create a canvas for the WorldWindow
     const canvasStyle = {
-//      backgroundColor: 'rgb(36,74,101)',
       cursor: (this.state.isDropArmed ? 'crosshair' : 'default')
+//      backgroundColor: 'rgb(36,74,101)',
     };
     return(
       <canvas id={this.canvasId} className={styles.canvasGlobe} style={canvasStyle}>
