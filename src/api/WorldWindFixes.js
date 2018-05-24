@@ -1,5 +1,5 @@
 /* 
- * Copyright (c) 2016 Bruce Schubert.
+ * Copyright (c) 2018 Bruce Schubert.
  * The MIT License
  * http://www.opensource.org/licenses/mit-license
  */
