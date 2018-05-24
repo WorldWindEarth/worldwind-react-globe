@@ -21,3 +21,4 @@ yarn-debug.log*
 yarn-error.log*
 /nbproject/private/
 /example/nbproject/
+/nbproject/
