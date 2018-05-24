@@ -13,7 +13,7 @@ npm install --save worldwind-react-globe
 
 ## Usage
 
-### Simplest Example
+### Simple Example
 
 Create a Globe using the defaults.
 
@@ -36,7 +36,7 @@ class App extends Component {
 
 Creates a Globe that fills the page.
 
-- Adds layers to the Globe using layer identifiers defined in `Globe.defaultLayers`
+- Adds layers to the Globe using [layer type names](#default_layer_types) defined in `Globe.defaultLayers`
 
 ##### App.js
 
@@ -48,31 +48,21 @@ import Globe from 'worldwind-react-globe'
 import './App.css'
 
 export default class App extends Component {
-
   render() {
-    // See Globe.defaultLayers for a list of layer string identifiers
-    const layers = [{
-        layer: "Sentinal2 with Labels", // partial names are ok
-        options: {category: "base", enabled: true}
-      }, {
-        layer: "Compass",
-        options: {category: "setting", enabled: true}
-      }, {
-        layer: "Coordinates",
-        options: {category: "setting", enabled: true}
-      }, {
-        layer: "View Controls",
-        options: {category: "setting", enabled: true}
-      }, {
-        layer: "Stars",
-        options: {category: "setting", enabled: false, displayName: "Stars"}
-      }
+    // See Globe.defaultLayers for a list of layer type names
+    const layers = [
+      "Sentinal2 with Labels", // partial names are OK
+      "Compass",
+      "Coordinates",
+      "View Controls",
+      "Atmosphere",
+      "Stars"
     ];
     return (
       <div className="fullscreen">
           <Globe layers={layers}/>
       </div>
-    )
+      )
   }
 }
 ```
@@ -88,7 +78,7 @@ export default class App extends Component {
 }
 ```
 
-### Default Layers
+### Default Layer Types
 
 Identifier | Description
 ---------- | --------------
