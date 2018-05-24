@@ -36,7 +36,7 @@ class App extends Component {
 
 Creates a Globe that fills the page.
 
-- Adds layers to the Globe using [layer type names](#default_layer_types) defined in `Globe.defaultLayers`
+- Adds layers to the Globe using [layer type names](#default-layer-types) defined in `Globe.defaultLayers`
 
 ##### App.js
 
