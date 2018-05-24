@@ -80,8 +80,10 @@ export default class App extends Component {
 
 ### Default Layer Types
 
-Identifier | Description
----------- | --------------
+Following is a list of the layer type names defined in `Globe.defaultLayers`.
+
+Layer Type Name | Description
+--------------- | --------------
 __Blue Marble__ | Blue Marble Next Generation (BMNG)
 __Blue Marble and LandSat__ | BMNG for oceans and seas with LandSat for land masses
 __Bing Aerial__ | Bing aerial imagery
@@ -93,7 +95,7 @@ __EOX OpenStreetMap__ | OpenStreetMap from EOX IT Services GmbH
 __Compass__ | A compass displayed in upper right
 __Coordinates__ | View coordinates displayed on top or bottom of screen
 __View Controls__ | View controls displayed in bottom left
-__Atmosphere__ | Atmosphere and day/night effects
+__Atmosphere and Day/Night__ | Atmosphere and day/night effects
 __Stars__ | Background star field
 __Tessellation__ | Shows terrain tessellation
 
