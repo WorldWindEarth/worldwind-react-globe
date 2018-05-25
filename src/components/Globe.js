@@ -15,12 +15,12 @@ import EnhancedAtmosphereLayer from '../api/EnhancedAtmosphereLayer';
 
 import styles from './Globe.css'
 
-  /* global WorldWind */
+    /* global WorldWind */
 
-  /**
-   * Globe React component.
-   */
-  export default class Globe extends Component {
+    /**
+     * Globe React component.
+     */
+    export default class Globe extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -334,16 +334,27 @@ import styles from './Globe.css'
     }
   }
 
+  /**
+   * Centers the globe on given location using animation to move from the current location.
+   */
   goTo(latitude, longitude, altitude) {
     const position = new WorldWind.Position(latitude, longitude, altitude);
     this.wwd.goTo(position);
   }
-  
+
+  /**
+   * Centers the globe on the given location without animation.
+   */
   lookAt(latitude, longitude, altitude) {
-    console.log("Globe.lookAt("+latitude+","+longitude+","+altitude+")")
-    this.wwd.navigator.lookAtLocation.latitude = latitude;
-    this.wwd.navigator.lookAtLocation.longitude = longitude;
-    this.wwd.navigator.range = altitude;
+    if (typeof latitude === 'number') {
+      this.wwd.navigator.lookAtLocation.latitude = latitude;
+    }
+    if (typeof longitude === 'number') {
+      this.wwd.navigator.lookAtLocation.longitude = longitude;
+    }
+    if (typeof altitude === 'number') {
+      this.wwd.navigator.range = altitude;
+    }
     this.wwd.redraw();
   }
 
@@ -390,14 +401,25 @@ import styles from './Globe.css'
     event.stopImmediatePropagation();
   }
 
+  /**
+   * Applies applicable property changes to the globe.
+   */
   shouldComponentUpdate(nextProps, nextState) {
-    // TODO: handle changes in the layers
-    if (nextProps.layers) {
-      nextProps.layers.forEach(layer => console.log(layer));
+    let shouldRerender = false;
+    
+    if (nextProps.latitude !== this.props.latitude ||
+        nextProps.longitude !== this.props.longitude ||
+        nextProps.altitude !== this.props.altitude) {
+      this.goTo(nextProps.latitude, nextProps.longitude, nextProps.altitude);
     }
-    return true;
+    // TODO: handle changes in the layers
+    
+    return shouldRerender;
   }
 
+  /**
+   * Creates the WorldWindow after mounting.
+   */
   componentDidMount() {
     // Create the WorldWindow using the ID of the canvas
     this.wwd = new WorldWind.WorldWindow(this.canvasId);
@@ -441,7 +463,7 @@ import styles from './Globe.css'
         }
       });
     }
-    
+
     // Change the startup position if given
     if (this.props.latitude && this.props.longitude) {
       this.lookAt(this.props.latitude, this.props.longitude, this.props.altitude)
@@ -462,10 +484,10 @@ import styles from './Globe.css'
 //      backgroundColor: 'rgb(36,74,101)',
     };
     return(
-      <canvas id={this.canvasId} className={styles.canvasGlobe} style={canvasStyle}>
-          Your browser does not support HTML5 Canvas.
-      </canvas>
-      );
+        <canvas id={this.canvasId} className={styles.canvasGlobe} style={canvasStyle}>
+            Your browser does not support HTML5 Canvas.
+        </canvas>
+        );
   }
 };
 
