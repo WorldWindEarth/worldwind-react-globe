@@ -75,6 +75,10 @@ import styles from './Globe.css'
      * A projection identifier string 
      */
     projection: PropTypes.string,
+    /**
+     * Background color CSS string
+     */
+    backgroundColor: PropTypes.string,
     /** 
      * The id of an existing canvas to attach the Globe 
      */
@@ -478,13 +482,17 @@ import styles from './Globe.css'
     if (this.props.canvasId) {
       return null;
     }
+    
     // Otherwise create a canvas for the WorldWindow
     const canvasStyle = {
-      cursor: (this.state.isDropArmed ? 'crosshair' : 'default')
-//      backgroundColor: 'rgb(36,74,101)',
+      width: '100%',
+      height: '100%',
+      cursor: (this.state.isDropArmed ? 'crosshair' : 'default'),
+      backgroundColor: (this.props.backgroundColor || 'rgb(36,74,101)')
     };
+    
     return(
-        <canvas id={this.canvasId} className={styles.canvasGlobe} style={canvasStyle}>
+        <canvas id={this.canvasId}  style={canvasStyle}>
             Your browser does not support HTML5 Canvas.
         </canvas>
         );
