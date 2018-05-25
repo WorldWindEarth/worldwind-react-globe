@@ -7,8 +7,16 @@ import React, { Component } from 'react'
 import Globe from 'worldwind-react-globe'
 
 import './App.css'
-
 export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      lat: 34.2,
+      lon: -119.2,
+      alt: 10e6
+    }
+  }
+
   render() {
     // See Globe.defaultLayers for a list of layer string identifiers
     const layers = [
@@ -19,10 +27,16 @@ export default class App extends Component {
       "Atmosphere",
       "Stars"
     ];
+
     return (
-      <div className="fullscreen">
-          <Globe layers={layers}/>
-      </div>
-      )
+        <div className="fullscreen">
+            <Globe 
+                layers={layers}
+                latitude={this.state.lat}
+                longitude={this.state.lon}
+                altitude={this.state.alt} 
+                />
+        </div>
+    )
   }
 }
