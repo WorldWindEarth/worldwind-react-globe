@@ -30,7 +30,7 @@ export default class App extends Component {
     ];
 
     return (
-        <div className="fullscreen" onClick={() => this.globeRef.current.armClickDrop()}>
+        <div className="fullscreen">
             <Globe 
                 ref={this.globeRef}
                 layers={layers}
