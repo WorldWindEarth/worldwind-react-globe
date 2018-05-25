@@ -12,15 +12,16 @@ import EoxOpenStreetMapLayer from '../api/EoxOpenStreetMapLayer';
 import EoxSentinal2CloudlessLayer from '../api/EoxSentinal2CloudlessLayer';
 import EoxSentinal2WithLabelsLayer from '../api/EoxSentinal2WithLabelsLayer';
 import EnhancedAtmosphereLayer from '../api/EnhancedAtmosphereLayer';
-
 import styles from './Globe.css'
 
-    /* global WorldWind */
+/* global WorldWind */
 
-    /**
-     * Globe React component.
-     */
-    export default class Globe extends Component {
+const DEFAULT_BACKGROUND_COLOR = 'rgb(36,74,101)';
+
+/**
+ * Globe React component.
+ */
+export default class Globe extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,8 +32,9 @@ import styles from './Globe.css'
     // Apply post-release fixes to the WorldWind library before creating a WorldWindow
     WorldWindFixes.applyLibraryFixes();
 
-    // Define the default path to WorldWind images folder.
+    // Skip if the base URL was already set by the application
     if (!Globe.isBaseUrlSet) {
+      // Define the default path to the images folder used by WorldWind.
       Globe.setBaseUrl('https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/');
     }
 
@@ -362,7 +364,11 @@ import styles from './Globe.css'
     this.wwd.redraw();
   }
 
-  activateClickDrop(dropCallback) {
+  /**
+   * Arms the click-drop handler with the given callback. The callback will be invoked with the 
+   * terrain position where the globe is next clicked or tapped.
+   */
+  armClickDrop(dropCallback) {
     this.dropCallback = dropCallback;
     this.setState({isDropArmed: true});
   }
@@ -409,16 +415,14 @@ import styles from './Globe.css'
    * Applies applicable property changes to the globe.
    */
   shouldComponentUpdate(nextProps, nextState) {
-    let shouldRerender = false;
-    
     if (nextProps.latitude !== this.props.latitude ||
         nextProps.longitude !== this.props.longitude ||
         nextProps.altitude !== this.props.altitude) {
       this.goTo(nextProps.latitude, nextProps.longitude, nextProps.altitude);
     }
     // TODO: handle changes in the layers
-    
-    return shouldRerender;
+
+    return true;
   }
 
   /**
@@ -478,21 +482,30 @@ import styles from './Globe.css'
   }
 
   render() {
-    // Use an existing canvas if provided
+    let cursor = (this.state.isDropArmed ? 'crosshair' : 'default');
+    let backgroundColor = (this.props.backgroundColor || DEFAULT_BACKGROUND_COLOR);
+
+    // Apply changes to an existing canvas
     if (this.props.canvasId) {
+      let canvas = document.getElementById(this.props.canvasId);
+      if (canvas) {
+        canvas.style.cursor = cursor;
+        canvas.style.backgroundColor = backgroundColor;
+      }
+      // Don't render this component's canvas if an existing canvas element is being used
       return null;
     }
-    
+
     // Otherwise create a canvas for the WorldWindow
-    const canvasStyle = {
+    let style = {
       width: '100%',
       height: '100%',
-      cursor: (this.state.isDropArmed ? 'crosshair' : 'default'),
-      backgroundColor: (this.props.backgroundColor || 'rgb(36,74,101)')
+      cursor: cursor,
+      backgroundColor: backgroundColor
     };
-    
+
     return(
-        <canvas id={this.canvasId}  style={canvasStyle}>
+        <canvas id={this.canvasId} style={style}>
             Your browser does not support HTML5 Canvas.
         </canvas>
         );
