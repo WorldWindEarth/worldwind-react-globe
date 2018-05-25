@@ -59,3 +59,30 @@ describe('Layers', () => {
   });
 });
 
+/**
+ * Navigation and moving the camera
+ */
+describe('Navigation', () => {
+
+  it('lookAt OXR airport', () => {
+    const LAT = 34.2;
+    const LON = -119.2;
+    const ALT = 50000;
+    const globe = TestRenderer.create(
+      <Globe 
+        canvasId="test-canvas" 
+        latitude={LAT}
+        longitude={LON}
+        altitude={ALT}/>
+      ).root.instance;
+    
+    let lookAtLocation = globe.wwd.navigator.lookAtLocation;
+    let altitude = globe.wwd.navigator.range;
+    
+    expect(lookAtLocation.latitude).toBe(LAT);
+    expect(lookAtLocation.longitude).toBe(LON);
+    expect(altitude).toBe(ALT);
+  });
+
+});
+

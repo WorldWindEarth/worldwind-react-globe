@@ -54,13 +54,34 @@ import styles from './Globe.css'
   }
 
   static propTypes = {
-    /** The id of an existing canvas to attach the Globe */
-    canvasId: PropTypes.string,
-    /** An array of layer identifier strings or layer configuration object */
+    /** 
+     * An array of layer type strings, WorldWind.Layer objects, and/or layer
+     * configuration objects, e.g., {layer: String|WorldWind.Layer, options: Object}
+     */
     layers: PropTypes.array,
-    /** A projection identifier string */
+    /**
+     * Latitude +/-90 degrees
+     */
+    latitude: PropTypes.number,
+    /**
+     * Longitude +/-180 degrees
+     */
+    longitude: PropTypes.number,
+    /**
+     * Altitude in meters above sea level (MSL)
+     */
+    altitude: PropTypes.number,
+    /** 
+     * A projection identifier string 
+     */
     projection: PropTypes.string,
-    /** A call back function to push state up to the parent */
+    /** 
+     * The id of an existing canvas to attach the Globe 
+     */
+    canvasId: PropTypes.string,
+    /** 
+     * A callback function to push state up to the parent 
+     */
     onUpdate: PropTypes.func
   }
 
@@ -313,9 +334,17 @@ import styles from './Globe.css'
     }
   }
 
-  goTo(latitude, longitude, range) {
-    const position = new WorldWind.Position(latitude, longitude, range);
+  goTo(latitude, longitude, altitude) {
+    const position = new WorldWind.Position(latitude, longitude, altitude);
     this.wwd.goTo(position);
+  }
+  
+  lookAt(latitude, longitude, altitude) {
+    console.log("Globe.lookAt("+latitude+","+longitude+","+altitude+")")
+    this.wwd.navigator.lookAtLocation.latitude = latitude;
+    this.wwd.navigator.lookAtLocation.longitude = longitude;
+    this.wwd.navigator.range = altitude;
+    this.wwd.redraw();
   }
 
   activateClickDrop(dropCallback) {
@@ -410,8 +439,12 @@ import styles from './Globe.css'
             }
             break;
         }
-      }
-      );
+      });
+    }
+    
+    // Change the startup position if given
+    if (this.props.latitude && this.props.longitude) {
+      this.lookAt(this.props.latitude, this.props.longitude, this.props.altitude)
     }
 
     // Update state
