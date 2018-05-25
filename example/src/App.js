@@ -15,6 +15,7 @@ export default class App extends Component {
       lon: -119.2,
       alt: 10e6
     }
+    this.globeRef = React.createRef();
   }
 
   render() {
@@ -29,8 +30,9 @@ export default class App extends Component {
     ];
 
     return (
-        <div className="fullscreen">
+        <div className="fullscreen" onClick={() => this.globeRef.current.armClickDrop()}>
             <Globe 
+                ref={this.globeRef}
                 layers={layers}
                 latitude={this.state.lat}
                 longitude={this.state.lon}
