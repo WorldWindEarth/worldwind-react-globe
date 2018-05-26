@@ -19,14 +19,9 @@ export default class App extends Component {
   }
 
   render() {
-    // See Globe.defaultLayers for a list of layer string identifiers
+    // See Globe.layerTypes for a list of layer type identifiers
     const layers = [
-      "Sentinal2 with Labels", // partial names are OK
-      "Compass",
-      "Coordinates",
-      "View Controls",
-      "Atmosphere",
-      "Stars"
+      "eox-sentinal2-labels",
     ];
 
     return (
