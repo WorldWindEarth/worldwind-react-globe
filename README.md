@@ -92,6 +92,8 @@ __bing-roads__ | Bing Roads | Bing roads map from [Bing maps](https://www.bingma
 __eox-sentinal2__ | EOX Sentinal-2 | Sentinal 2 imagery from [EOX IT Services GmbH](https://maps.eox.at/)
 __eox-sentinal2-labels__ | EOX Sentinal-2 with Labels | Sentinal 2 imagery with OpenStreetMap overlay from [EOX IT Services GmbH](https://maps.eox.at/)
 __eox-openstreetmap__ | EOX OpenStreetMap | OpenStreetMap from [EOX IT Services GmbH](https://maps.eox.at/)
+__usgs-topo__ | USGS Topographic | Topographic base map from the [USGS](https://nationalmap.gov/)
+__usgs-imagery-topo__ | USGS Imagery Topographic | Imagery and topographic base map from the [USGS](https://nationalmap.gov/)
 __renderables__ | Renderables | A general purpose layer for hosting shapes and markers
 __compass__ | Compass | A compass displayed in upper right
 __coordinates__ | Coordinates | View coordinates displayed on top or bottom of screen
