@@ -1,6 +1,8 @@
-# worldwind-react-globe | [demo](https://emxsys.github.io/worldwind-react-globe/)
+# worldwind-react-globe 
 
 > A 3D globe for React featuring maps, imagery and terrain plus 2D map projections using the [Web WorldWind](https://github.com/NASAWorldWind/WebWorldWind) virtual globe SDK from [NASA and ESA](https://worldwind.arc.nasa.gov/web/).
+>
+> [Demo](https://emxsys.github.io/worldwind-react-globe/)
 
 [![NPM](https://img.shields.io/npm/v/worldwind-react-globe.svg)](https://www.npmjs.com/package/worldwind-react-globe) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
