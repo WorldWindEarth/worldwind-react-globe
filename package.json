@@ -4,18 +4,19 @@
   "description": "A NASA WorldWind 3D virtual globe for React featuring maps, imagery and terrain plus 2D map projections.",
   "keywords": [
     "react",
+    "react-component",
     "worldwind",
-    "earth",
     "globe",
+    "earth",
     "map",
     "imagery",
     "elevation",
     "terrain",
-    "nasa",
-    "esa",
     "gis",
     "geospatial",
-    "3D"
+    "3D",
+    "nasa",
+    "esa"
   ],
   "homepage": "https://emxsys.github.io/worldwind-react-globe",
   "bugs": "https://github.com/emxsys/worldwind-react-globe/issues",
