@@ -12,15 +12,18 @@ import EoxOpenStreetMapLayer from '../api/EoxOpenStreetMapLayer';
 import EoxSentinal2CloudlessLayer from '../api/EoxSentinal2CloudlessLayer';
 import EoxSentinal2WithLabelsLayer from '../api/EoxSentinal2WithLabelsLayer';
 import EnhancedAtmosphereLayer from '../api/EnhancedAtmosphereLayer';
+import UsgsTopoBaseMapLayer from '../api/UsgsTopoBaseMapLayer';
+import UsgsImageryTopoBaseMapLayer from '../api/UsgsImageryTopoBaseMapLayer';
+import styles from './Globe.css';
 
-import styles from './Globe.css'
+/* global WorldWind */
 
-    /* global WorldWind */
+const DEFAULT_BACKGROUND_COLOR = 'rgb(36,74,101)';
 
-    /**
-     * Globe React component.
-     */
-    export default class Globe extends Component {
+/**
+ * Globe React component.
+ */
+export default class Globe extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,8 +34,9 @@ import styles from './Globe.css'
     // Apply post-release fixes to the WorldWind library before creating a WorldWindow
     WorldWindFixes.applyLibraryFixes();
 
-    // Define the default path to WorldWind images folder.
+    // Skip if the base URL was already set by the application
     if (!Globe.isBaseUrlSet) {
+      // Define the default path to the images folder used by WorldWind.
       Globe.setBaseUrl('https://files.worldwind.arc.nasa.gov/artifactory/web/0.9.0/');
     }
 
@@ -89,6 +93,49 @@ import styles from './Globe.css'
     onUpdate: PropTypes.func
   }
 
+  static get categories() {
+    if (!Globe._categories) {
+      Globe._categories = new Map();
+      Globe._categories.set('background', 'Background');
+      Globe._categories.set('base', 'Base Layers');
+      Globe._categories.set('overlay', 'Overlays');
+      Globe._categories.set('data', 'Data');
+      Globe._categories.set('setting', 'Settings');
+      Globe._categories.set('debug', 'Debugging');
+    }
+    return Globe._categories;
+  }
+
+  /**
+   * Predefined layer types used by addLayer(). An application is free to change 
+   * the values but not the keys. The values are used for the default 
+   * layer display names.
+   */
+  static get layerTypes() {
+    if (!Globe._layerTypes) {
+      Globe._layerTypes = new Map();
+      Globe._layerTypes.set('blue-marble', 'Blue Marble');
+      Globe._layerTypes.set('blue-marble-lowres', 'Background');
+      Globe._layerTypes.set('blue-marble-landsat', 'Blue Marble and LandSat');
+      Globe._layerTypes.set('bing-aerial', 'Bing Aerial');
+      Globe._layerTypes.set('bing-aerial-labels', 'Bing Aerial with Labels');
+      Globe._layerTypes.set('bing-roads', 'Bing Roads');
+      Globe._layerTypes.set('eox-sentinal2', 'EOX Sentinal-2');
+      Globe._layerTypes.set('eox-sentinal2-labels', 'EOX Sentinal-2 with Labels');
+      Globe._layerTypes.set('eox-openstreetmap', 'EOX OpenStreetMap');
+      Globe._layerTypes.set('usgs-topo', 'USGS Topographic');
+      Globe._layerTypes.set('usgs-imagery-topo', 'USGS Imagery Topographic');
+      Globe._layerTypes.set('renderables', 'Renderables');
+      Globe._layerTypes.set('compass', 'Compass');
+      Globe._layerTypes.set('coordinates', 'Coordinates');
+      Globe._layerTypes.set('view-controls', 'View Controls');
+      Globe._layerTypes.set('atmosphere-day-night', 'Atmosphere and Day/Night');
+      Globe._layerTypes.set('stars', 'Stars');
+      Globe._layerTypes.set('tessellation', 'Tessellation');
+    }
+    return Globe._layerTypes;
+  }
+
   static projections = [
     "3D",
     "Equirectangular",
@@ -99,23 +146,6 @@ import styles from './Globe.css'
     "South UPS",
     "North Gnomonic",
     "South Gnomonic"
-  ]
-
-  static defaultLayers = [
-    "Blue Marble",
-    "Blue Marble and LandSat",
-    "Bing Aerial",
-    "Bing Aerial with Labels",
-    "Bing Roads",
-    "EOX Sentinal2",
-    "EOX Sentinal2 with Labels",
-    "EOX OpenStreetMap",
-    "Compass",
-    "Coordinates",
-    "View Controls",
-    "Atmosphere and Day/Night",
-    "Stars",
-    "Tessellation"
   ];
 
   /**
@@ -129,60 +159,171 @@ import styles from './Globe.css'
   static isBaseUrlSet = false;
 
   /**
-   * Switches between a 3D round globe and 2D flat globe projections.
-   * @param {String|Number} projection A projections[] string or index
+   * Add a layer to the globe and applies options object properties to the 
+   * the layer.
+   * @param {WorldWind.Layer|String} layer A layer object or a Globe.layerTypes key or value
+   * @param {Object|null} options E.g., {category: "base", enabled: true}
+   * @returns {WorldWind.Layer}
    */
-  changeProjection(projection) {
-    const proj = (typeof projection === 'number' ? Globe.projections[projection] : projection);
+  addLayer(layer, options) {
+    let wwLayer = null;
 
-    if (proj === "3D") {
-      if (!this.roundGlobe) {
-        this.roundGlobe = new WorldWind.Globe(new WorldWind.EarthElevationModel());
-      }
-      // Replace the flat globe
-      if (this.wwd.globe !== this.roundGlobe) {
-        this.wwd.globe = this.roundGlobe;
-      }
+    if (typeof layer === 'string') {
+      wwLayer = this.createLayer(layer);
+    } else if (layer instanceof WorldWind.Layer) {
+      wwLayer = layer;
     } else {
-      if (!this.flatGlobe) {
-        this.flatGlobe = new WorldWind.Globe2D();
-      }
-      // Create the projection used by the flat globe
-      if (proj === "EQUIRECTANGULAR") {
-        this.flatGlobe.projection = new WorldWind.ProjectionEquirectangular();
-      } else if (proj === "MERCATOR") {
-        this.flatGlobe.projection = new WorldWind.ProjectionMercator();
-      } else if (proj === "NORTH POLAR") {
-        this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("North");
-      } else if (proj === "SOUTH POLAr") {
-        this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("South");
-      } else if (proj === "NORTH UPS") {
-        this.flatGlobe.projection = new WorldWind.ProjectionUPS("North");
-      } else if (proj === "SOUTH UPS") {
-        this.flatGlobe.projection = new WorldWind.ProjectionUPS("South");
-      } else if (proj === "NORTH GNOMONIC") {
-        this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("North");
-      } else if (proj === "SOUTH GNOMONIC") {
-        this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("South");
-      }
-      // Replace the 3D globe
-      if (this.wwd.globe !== this.flatGlobe) {
-        this.wwd.globe = this.flatGlobe;
+      throw new Error("addLayer 'layer' argument must be a String or a WorldWind.Layer")
+    }
+
+    // Copy all properties defined on the 'options' object to the layer
+    if (options) {
+      for (let prop in options) {
+        if (!options.hasOwnProperty(prop)) {
+          continue; // skip inherited props
+        }
+        wwLayer[prop] = options[prop];
       }
     }
+
+    // Assign a default category property for layer management 
+    if (typeof wwLayer.category === 'undefined') {
+      wwLayer.category = 'base'; // default category
+    }
+    if (!Globe.categories.has(wwLayer.category)) {
+      let found = false;
+      for (let [key, value] of Globe.categories.entries()) {
+        if (found = value.includes(wwLayer.category)) {
+          wwLayer.category = key;
+          break;
+        }
+      }
+      if (!found) {
+        throw new Error("addLayer: 'category " + wwLayer.category + "' is not a valid Globe.categories key");
+      }
+    }
+
+    // Assign a unique layer ID for layer management 
+    wwLayer.uniqueId = this.nextLayerId++;
+
+    // Add the layer to the end of the layers within the category
+    let index = 0;
+    for (let category of Globe.categories.keys()) {
+      index += this.getLayers(category).length;
+      if (category === wwLayer.category) {
+        this.wwd.insertLayer(index, wwLayer);
+        break;
+      }
+    }
+    this.wwd.redraw();
+
+    // Signal a change in the category
+    this.updateCategoryTimestamp(wwLayer.category);
+
+    this.publishUpdate(wwLayer.category);
+    return wwLayer;
   }
 
   /**
-   * Returns a new array of layers within the given category.
-   * @param {String} category E.g., "base", "overlay" or "setting".
-   * @returns {Array}
+   * Creates a layer based on a layerType key or value. Layer type keys must be 
+   * an exact match; partial strings may be used for layer type values. 
+   * @param {String} layerType A Globe.layerTypes key or value
+   * @returns {WorldWind.Layer|null}  
    */
-  getLayers(category) {
-    if (category) {
-      return this.wwd.layers.filter(layer => layer.category === category);
+  createLayer(layerType) {
+    let type = null;
+
+    if (Globe.layerTypes.has(layerType)) {
+      // layerType is a key
+      type = layerType;
     } else {
-      return this.wwd.layers;
+      // Look for a layer type value that matches the name in full or part
+      let findType = (name) => {
+        for (let [key, value] of Globe.layerTypes.entries()) {
+          if (value.includes(name)) {
+            return key;
+          }
+        }
+      };
+      type = findType(layerType);
     }
+    // Create the WorldWind.Layer object cooresponding to the layerType
+    let layer = null;
+    switch (type) {
+      case 'blue-marble':
+        layer = new WorldWind.BMNGLayer();
+        break;
+      case 'blue-marble-lowres':
+        layer = new WorldWind.BMNGOneImageLayer();
+        layer.minActiveAltitude = 0;   // override the default value of 3e6;
+        break;
+      case 'blue-marble-landsat':
+        layer = new WorldWind.BMNGLandsatLayer();
+        break;
+      case 'bing-aerial':
+        layer = new WorldWind.BingAerialLayer();
+        layer.detailControl = 1.25;
+        break;
+      case 'bing-aerial-labels':
+        layer = new WorldWind.BingAerialWithLabelsLayer();
+        layer.detailControl = 1.25;
+        break;
+      case 'bing-roads':
+        layer = new WorldWind.BingRoadsLayer();
+        layer.detailControl = 1.25;
+        break;
+      case 'eox-sentinal2':
+        layer = new EoxSentinal2CloudlessLayer();
+        break;
+      case 'eox-sentinal2-labels':
+        layer = new EoxSentinal2WithLabelsLayer();
+        break;
+      case 'eox-openstreetmap':
+        layer = new EoxOpenStreetMapLayer();
+        break;
+      case 'usgs-topo':
+        layer = new UsgsTopoBaseMapLayer();
+        layer.detailControl = 1.75;
+        break;
+      case 'usgs-imagery-topo':
+        layer = new UsgsImageryTopoBaseMapLayer();
+        layer.detailControl = 1.75;
+        break;
+      case 'renderables':
+        layer = new WorldWind.RenderableLayer();
+        break;
+      case 'compass':
+        layer = new WorldWind.CompassLayer();
+        break;
+      case 'coordinates':
+        layer = new WorldWind.CoordinatesDisplayLayer(this.wwd);
+        break;
+      case 'view-controls':
+        layer = new WorldWind.ViewControlsLayer(this.wwd);
+        // Override the default placement to allow room for credits 
+        layer.placement = new WorldWind.Offset(WorldWind.OFFSET_PIXELS, 11, WorldWind.OFFSET_PIXELS, 11);
+        layer.showPanControl = false;
+        layer.showHeadingControl = true;
+        layer.showTiltControl = true;
+        layer.showZoomControl = true;
+        layer.showExaggerationControl = true;
+        layer.showFieldOfViewControl = false;
+        break;
+      case 'atmosphere-day-night':
+        layer = new EnhancedAtmosphereLayer();
+        break;
+      case 'stars':
+        layer = new WorldWind.StarFieldLayer();
+        break;
+      case 'tessellation':
+        layer = new WorldWind.ShowTessellationLayer();
+        break;
+      default:
+        console.error("Globe.createLayer('" + layerType + "'): layer type does not match an entry in Globe.layerTypes");
+        return null;
+    }
+    layer.displayName = Globe.layerTypes.get(type);
+    return layer;
   }
 
   /**
@@ -201,83 +342,24 @@ import styles from './Globe.css'
   }
 
   /**
-   * Add a layer to the globe and applies options object properties to the 
-   * the layer.
-   * @param {WorldWind.Layer|String|Number} layer
-   * @param {Object|null} options E.g., {category: "base", enabled: true}
-   * @returns {WorldWind.Layer}
+   * Returns a new array of layers within the given category.
+   * @param {String} category A category key, e.g., "base", "overlay", etc.
+   * @returns {Array}
    */
-  addLayer(layer, options) {
-    if (typeof layer === 'number') {
-      // Transform layer index into a layer string identifier
-      layer = Globe.defaultLayers[layer];
-    }
-    if (typeof layer === 'string') {
-      // Ensure layer name is a value contained in the layers array
-      const name = Globe.defaultLayers.find(name => name.includes(layer));
-      if (name === 'undefined') {
-        console.error("Globe.addLayer: '" + layer + "' is not a valid layer name");
-        return null;
-      }
-      // Create the WorldWind.Layer object cooresponding to the name
-      if (name === "Blue Marble") {
-        layer = new WorldWind.BMNGLayer();
-      } else if (name === "Blue Marble and LandSat") {
-        layer = new WorldWind.BMNGLandsatLayer();
-      } else if (name === "Bing Aerial") {
-        layer = new WorldWind.BingAerialLayer();
-      } else if (name === "Bing Aerial with Labels") {
-        layer = new WorldWind.BingAerialWithLabelsLayer();
-      } else if (name === "Bing Roads") {
-        layer = new WorldWind.BingRoadsLayer();
-      } else if (name === "EOX Sentinal2") {
-        layer = new EoxSentinal2CloudlessLayer();
-      } else if (name === "EOX Sentinal2 with Labels") {
-        layer = new EoxSentinal2WithLabelsLayer();
-      } else if (name === "EOX OpenStreetMap") {
-        layer = new EoxOpenStreetMapLayer();
-      } else if (name === "Compass") {
-        layer = new WorldWind.CompassLayer();
-      } else if (name === "Coordinates") {
-        layer = new WorldWind.CoordinatesDisplayLayer(this.wwd);
-      } else if (name === "View Controls") {
-        layer = new WorldWind.ViewControlsLayer(this.wwd);
-      } else if (name === "Atmosphere and Day/Night") {
-        layer = new EnhancedAtmosphereLayer();
-      } else if (name === "Stars") {
-        layer = new WorldWind.StarFieldLayer();
-      } else if (name === "Tessellation") {
-        layer = new WorldWind.ShowTessellationLayer();
-      } else {
-        console.error("Globe.addLayer() layer name not found: " + name);
-      }
-    }
-
-    // Copy all properties defined on the options object to the layer
-    if (options) {
-      for (let prop in options) {
-        if (!options.hasOwnProperty(prop)) {
-          continue; // skip inherited props
+  getLayers(category) {
+    if (category) {
+      if (!Globe.categories.has(category)) {
+        for (let [key, value] of Globe.categories.entries()) {
+          if (value.includes(category)) {
+            category = key;
+            break;
+          }
         }
-        layer[prop] = options[prop];
       }
+      return this.wwd.layers.filter(layer => layer.category === category);
+    } else {
+      return this.wwd.layers;
     }
-    // Assign a default category property for layer management 
-    if (typeof layer.category === 'undefined') {
-      layer.category = 'overlay'; // default category
-    }
-    // Assign a unique layer ID for layer management 
-    layer.uniqueId = this.nextLayerId++;
-
-    // Add the layer to the globe
-    this.wwd.addLayer(layer);
-    this.wwd.redraw();
-
-    // Signal a change in the category
-    this.updateCategoryTimestamp(layer.category);
-
-    this.publishUpdate(layer.category);
-    return layer;
   }
 
   /**
@@ -339,7 +421,8 @@ import styles from './Globe.css'
   }
 
   /**
-   * Centers the globe on given location using animation to move from the current location.
+   * Centers the globe on given location and viewed from the given altitude,
+   * using animation to move from the current location.
    */
   goTo(latitude, longitude, altitude) {
     const position = new WorldWind.Position(latitude, longitude, altitude);
@@ -347,7 +430,7 @@ import styles from './Globe.css'
   }
 
   /**
-   * Centers the globe on the given location without animation.
+   * Centers the globe on the given location and viewed from the given altitude (without animation).
    */
   lookAt(latitude, longitude, altitude) {
     if (typeof latitude === 'number') {
@@ -362,7 +445,11 @@ import styles from './Globe.css'
     this.wwd.redraw();
   }
 
-  activateClickDrop(dropCallback) {
+  /**
+   * Arms the click-drop handler with the given callback. The callback will be invoked with the 
+   * terrain position where the globe is next clicked or tapped.
+   */
+  armClickDrop(dropCallback) {
     this.dropCallback = dropCallback;
     this.setState({isDropArmed: true});
   }
@@ -406,19 +493,61 @@ import styles from './Globe.css'
   }
 
   /**
+   * Switches between a 3D round globe and 2D flat globe projections.
+   * @param {String|Number} projection A projections[] string or index
+   */
+  changeProjection(projection) {
+    const proj = (typeof projection === 'number' ? Globe.projections[projection] : projection);
+
+    if (proj === "3D") {
+      if (!this.roundGlobe) {
+        this.roundGlobe = new WorldWind.Globe(new WorldWind.EarthElevationModel());
+      }
+      // Replace the flat globe
+      if (this.wwd.globe !== this.roundGlobe) {
+        this.wwd.globe = this.roundGlobe;
+      }
+    } else {
+      if (!this.flatGlobe) {
+        this.flatGlobe = new WorldWind.Globe2D();
+      }
+      // Create the projection used by the flat globe
+      if (proj === "EQUIRECTANGULAR") {
+        this.flatGlobe.projection = new WorldWind.ProjectionEquirectangular();
+      } else if (proj === "MERCATOR") {
+        this.flatGlobe.projection = new WorldWind.ProjectionMercator();
+      } else if (proj === "NORTH POLAR") {
+        this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("North");
+      } else if (proj === "SOUTH POLAr") {
+        this.flatGlobe.projection = new WorldWind.ProjectionPolarEquidistant("South");
+      } else if (proj === "NORTH UPS") {
+        this.flatGlobe.projection = new WorldWind.ProjectionUPS("North");
+      } else if (proj === "SOUTH UPS") {
+        this.flatGlobe.projection = new WorldWind.ProjectionUPS("South");
+      } else if (proj === "NORTH GNOMONIC") {
+        this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("North");
+      } else if (proj === "SOUTH GNOMONIC") {
+        this.flatGlobe.projection = new WorldWind.ProjectionGnomonic("South");
+      }
+      // Replace the 3D globe
+      if (this.wwd.globe !== this.flatGlobe) {
+        this.wwd.globe = this.flatGlobe;
+      }
+    }
+  }
+
+  /**
    * Applies applicable property changes to the globe.
    */
   shouldComponentUpdate(nextProps, nextState) {
-    let shouldRerender = false;
-    
     if (nextProps.latitude !== this.props.latitude ||
-        nextProps.longitude !== this.props.longitude ||
-        nextProps.altitude !== this.props.altitude) {
+      nextProps.longitude !== this.props.longitude ||
+      nextProps.altitude !== this.props.altitude) {
       this.goTo(nextProps.latitude, nextProps.longitude, nextProps.altitude);
     }
     // TODO: handle changes in the layers
-    
-    return shouldRerender;
+
+    return true;
   }
 
   /**
@@ -442,11 +571,7 @@ import styles from './Globe.css'
     this.wwd.addEventListener('touchend', (e) => this.handleGlobeClick(e));
 
     // Add a low-res background layer that's always available
-    this.addLayer(new WorldWind.BMNGOneImageLayer(), {
-      category: "background",
-      enabled: true,
-      minActiveAltitude: 0}   // override the default value of 3e6;
-    );
+    this.addLayer('blue-marble-lowres', {category: "background"});  // this should be a setting
 
     // Add any supplied layer configurations to the globe
     if (this.props.layers) {
@@ -454,7 +579,6 @@ import styles from './Globe.css'
       {
         switch (typeof config) {
           case 'string':
-          case 'number':
             this.addLayer(config);
             break;
           case 'object':
@@ -468,7 +592,7 @@ import styles from './Globe.css'
       });
     }
 
-    // Change the startup position if given
+    // Change the startup position if given 
     if (this.props.latitude && this.props.longitude) {
       this.lookAt(this.props.latitude, this.props.longitude, this.props.altitude)
     }
@@ -478,24 +602,33 @@ import styles from './Globe.css'
   }
 
   render() {
-    // Use an existing canvas if provided
+    let cursor = (this.state.isDropArmed ? 'crosshair' : 'default');
+    let backgroundColor = (this.props.backgroundColor || DEFAULT_BACKGROUND_COLOR); // this should use a defaultProps
+
+    // Apply changes to an existing canvas
     if (this.props.canvasId) {
+      let canvas = document.getElementById(this.props.canvasId);
+      if (canvas) {
+        canvas.style.cursor = cursor;
+        canvas.style.backgroundColor = backgroundColor;
+      }
+      // Don't render this component's canvas if an existing canvas element is being used
       return null;
     }
-    
+
     // Otherwise create a canvas for the WorldWindow
-    const canvasStyle = {
+    let style = {
       width: '100%',
       height: '100%',
-      cursor: (this.state.isDropArmed ? 'crosshair' : 'default'),
-      backgroundColor: (this.props.backgroundColor || 'rgb(36,74,101)')
+      cursor: cursor,
+      backgroundColor: backgroundColor
     };
-    
+
     return(
-        <canvas id={this.canvasId}  style={canvasStyle}>
-            Your browser does not support HTML5 Canvas.
-        </canvas>
-        );
+      <canvas id={this.canvasId} style={style}>
+          Your browser does not support HTML5 Canvas.
+      </canvas>
+      );
   }
 };
 

@@ -1,6 +1,8 @@
-# worldwind-react-globe ([demo](https://emxsys.github.io/worldwind-react-globe/))
+# worldwind-react-globe 
 
-> A [NASA WorldWind](https://worldwind.arc.nasa.gov/web/) 3D virtual globe for React featuring maps, imagery and terrain plus 2D map projections.
+> A 3D globe for React featuring maps, imagery and terrain plus 2D map projections using the [Web WorldWind](https://github.com/NASAWorldWind/WebWorldWind) virtual globe SDK from [NASA and ESA](https://worldwind.arc.nasa.gov/web/).
+>
+> [Demo](https://emxsys.github.io/worldwind-react-globe/)
 
 [![NPM](https://img.shields.io/npm/v/worldwind-react-globe.svg)](https://www.npmjs.com/package/worldwind-react-globe) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -48,9 +50,9 @@ import './App.css'
 
 export default class App extends Component {
   render() {
-    // See Globe.defaultLayers for a list of layer type names
+    // See Globe.layerTypes 
     const layers = [
-      "Sentinal2 with Labels", // partial names are OK
+      "Sentinal-2 with Labels", // partial names are OK
       "Compass",
       "Coordinates",
       "View Controls",
@@ -77,26 +79,30 @@ export default class App extends Component {
 }
 ```
 
-### Default Layer Types
+### Predefined Layer Types
 
-Following is a list of the layer type names defined in `Globe.defaultLayers`.
+Following is a list of the predefined layer type names available in `Globe.layerTypes`.
 
-Layer Type Name | Description
---------------- | --------------
-__Blue Marble__ | Blue Marble Next Generation (BMNG)
-__Blue Marble and LandSat__ | BMNG for oceans and seas with LandSat for land masses
-__Bing Aerial__ | Bing aerial imagery
-__Bing Aerial with Labels__ | Bing aerial imagery with road and place name labels
-__Bing Roads__ | Bing roads map
-__EOX Sentinal2__ | Sentinal 2 imagery from EOX IT Services GmbH
-__EOX Sentinal2 with Labels__ | Sentinal 2 imagery with OpenStreetMap overlay from EOX IT Services GmbH
-__EOX OpenStreetMap__ | OpenStreetMap from EOX IT Services GmbH
-__Compass__ | A compass displayed in upper right
-__Coordinates__ | View coordinates displayed on top or bottom of screen
-__View Controls__ | View controls displayed in bottom left
-__Atmosphere and Day/Night__ | Atmosphere and day/night effects
-__Stars__ | Background star field
-__Tessellation__ | Shows terrain tessellation
+Key | Value | Description
+-------------- | --------------- | --------------
+__blue-marble__ | Blue Marble | Blue Marble Next Generation (BMNG)
+__blue-marble-landsat__ | Blue Marble and LandSat | BMNG for oceans and seas with LandSat for land masses
+__blue-marble-lowres__ | Background | Blue Marble low-resolution background image
+__bing-aerial__ | Bing Aerial | Bing aerial imagery from [Bing maps](https://www.bingmapsportal.com/)
+__bing-aerial-labels__ | Bing Aerial with Labels | Bing aerial imagery with road and place name labels from [Bing maps](https://www.bingmapsportal.com/)
+__bing-roads__ | Bing Roads | Bing roads map from [Bing maps](https://www.bingmapsportal.com/)
+__eox-sentinal2__ | EOX Sentinal-2 | Sentinal 2 imagery from [EOX IT Services GmbH](https://maps.eox.at/)
+__eox-sentinal2-labels__ | EOX Sentinal-2 with Labels | Sentinal 2 imagery with OpenStreetMap overlay from [EOX IT Services GmbH](https://maps.eox.at/)
+__eox-openstreetmap__ | EOX OpenStreetMap | OpenStreetMap from [EOX IT Services GmbH](https://maps.eox.at/)
+__usgs-topo__ | USGS Topographic | Topographic base map from the [USGS](https://nationalmap.gov/)
+__usgs-imagery-topo__ | USGS Imagery Topographic | Imagery and topographic base map from the [USGS](https://nationalmap.gov/)
+__renderables__ | Renderables | A general purpose layer for hosting shapes and markers
+__compass__ | Compass | A compass displayed in upper right
+__coordinates__ | Coordinates | View coordinates displayed on top or bottom of screen
+__view-controls__ | View Controls | View controls displayed in bottom left
+__atmosphere-day-night__ | Atmosphere and Day/Night | Atmosphere and day/night effects
+__stars__ | Stars | Background star field
+__tessellation__ |Tessellation | Shows terrain tessellation
 
 ## License
 

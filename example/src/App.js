@@ -15,22 +15,21 @@ export default class App extends Component {
       lon: -119.2,
       alt: 10e6
     }
+    this.globeRef = React.createRef();
   }
 
   render() {
-    // See Globe.defaultLayers for a list of layer string identifiers
+    // See Globe.layerTypes for a list of layer type identifiers
     const layers = [
-      "Sentinal2 with Labels", // partial names are OK
-      "Compass",
-      "Coordinates",
-      "View Controls",
-      "Atmosphere",
-      "Stars"
+      "eox-sentinal2-labels",
+      "coordinates",
+      "view-controls"
     ];
 
     return (
         <div className="fullscreen">
             <Globe 
+                ref={this.globeRef}
                 layers={layers}
                 latitude={this.state.lat}
                 longitude={this.state.lon}
