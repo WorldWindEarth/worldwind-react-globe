@@ -22,6 +22,8 @@ export default class App extends Component {
     // See Globe.layerTypes for a list of layer type identifiers
     const layers = [
       "eox-sentinal2-labels",
+      "coordinates",
+      "view-controls"
     ];
 
     return (
