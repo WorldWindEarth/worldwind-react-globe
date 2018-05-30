@@ -124,7 +124,7 @@ export default class Globe extends Component {
       Globe._layerTypes.set('eox-sentinal2-labels', 'EOX Sentinal-2 with Labels');
       Globe._layerTypes.set('eox-openstreetmap', 'EOX OpenStreetMap');
       Globe._layerTypes.set('usgs-topo', 'USGS Topographic');
-      Globe._layerTypes.set('usgs-imagery-topo', 'USGS Topographic Imagery');
+      Globe._layerTypes.set('usgs-imagery-topo', 'USGS Imagery Topographic');
       Globe._layerTypes.set('renderables', 'Renderables');
       Globe._layerTypes.set('compass', 'Compass');
       Globe._layerTypes.set('coordinates', 'Coordinates');
