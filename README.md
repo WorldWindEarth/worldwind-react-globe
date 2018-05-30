@@ -14,7 +14,7 @@ npm install --save worldwind-react-globe
 
 ## Usage
 
-### Simple Example
+### Example #1: Simple
 
 Create a Globe using the defaults.
 
@@ -23,47 +23,115 @@ import React, { Component } from 'react'
 import Globe from 'worldwind-react-globe'
 
 class App extends Component {
-    render () {
-        return (
-            <div>
-                <Globe />
-            </div>
-        )
-    }
+  render () {
+    return (
+      <div>
+        <Globe />
+      </div>
+    )
+  }
 }
 ```
 
-### Typical Example
+### Example #2: Normal
 
 Creates a Globe that fills the page.
 
-- Adds layers to the Globe using [layer type names](#default-layer-types) defined in `Globe.defaultLayers`
+- Adds layers to the Globe using [layer type keys](#predefined-layer-types) 
+defined in `Globe.layerTypes`
+- Sets the startup latitude and longitude coordinates (in decimal degrees)and 
+the eye/camera altitude (in meters)
 
 ##### App.js
 
 ```jsx
-
 import React, { Component } from 'react'
 import Globe from 'worldwind-react-globe'
-
 import './App.css'
 
 export default class App extends Component {
   render() {
-    // See Globe.layerTypes 
+
     const layers = [
-      "Sentinal-2 with Labels", // partial names are OK
-      "Compass",
-      "Coordinates",
-      "View Controls",
-      "Atmosphere",
-      "Stars"
+      'eox-sentinal2-labels',
+      'coordinates',
+      'view-controls',
+      'stars',
+      'atmosphere-day-night'
+    ];
+
+    return (
+      <div className='fullscreen'>
+        <Globe 
+          ref={this.globeRef}
+          layers={layers}
+          latitude={34.2}
+          longitude={-119.2}
+          altitude={10e6} 
+        />
+      </div>
+    )
+  }
+}
+```
+
+##### App.css
+
+```css
+
+.fullscreen {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+```
+
+### Example #3: More Complex
+
+Creates a Globe that fills the page.
+
+- Adds layers to the Globe using [layer type keys](#predefined-layer-types) 
+defined in `Globe.layerTypes`
+- Sets and changes the globe's latitude and longitude coordinates and the 
+eye/camera altitude via the component's state.
+- Uses a `ref` object to get a references to the Globe
+
+##### App.js
+
+```jsx
+import React, { Component } from 'react'
+import Globe from 'worldwind-react-globe'
+import './App.css'
+
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      lat: 34.2,
+      lon: -119.2,
+      alt: 10e6
+    }
+    this.globeRef = React.createRef();
+  }
+
+  render() {
+    const layers = [
+      'eox-sentinal2-labels',
+      'coordinates',
+      'view-controls',
+      'stars',
+      'atmosphere-day-night'
     ];
     return (
-      <div className="fullscreen">
-          <Globe layers={layers}/>
+      <div className='fullscreen'>
+        <Globe 
+          layers={layers}
+          latitude={this.state.lat}
+          longitude={this.state.lon}
+          altitude={this.state.alt} 
+        />
       </div>
-      )
+    )
   }
 }
 ```
