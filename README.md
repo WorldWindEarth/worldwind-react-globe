@@ -81,17 +81,17 @@ export default class App extends Component {
 
 Following is a list of the predefined layer type names available in `Globe.layerTypes`.
 
-Layer Type Key | Layer Type Name | Description
+Key | Value | Description
 -------------- | --------------- | --------------
 __blue-marble__ | Blue Marble | Blue Marble Next Generation (BMNG)
 __blue-marble-landsat__ | Blue Marble and LandSat | BMNG for oceans and seas with LandSat for land masses
 __blue-marble-lowres__ | Background | Blue Marble low-resolution background image
-__bing-aerial__ | Bing Aerial | Bing aerial imagery
-__bing-aerial-labels__ | Bing Aerial with Labels | Bing aerial imagery with road and place name labels
-__bing-roads__ | Bing Roads | Bing roads map
-__eox-sentinal2__ | EOX Sentinal-2 | Sentinal 2 imagery from EOX IT Services GmbH
-__eox-sentinal2-labels__ | EOX Sentinal-2 with Labels | Sentinal 2 imagery with OpenStreetMap overlay from EOX IT Services GmbH
-__EOX OpenStreetMap__ | OpenStreetMap from EOX IT Services GmbH
+__bing-aerial__ | Bing Aerial | Bing aerial imagery from [Bing maps](https://www.bingmapsportal.com/)
+__bing-aerial-labels__ | Bing Aerial with Labels | Bing aerial imagery with road and place name labels from [Bing maps](https://www.bingmapsportal.com/)
+__bing-roads__ | Bing Roads | Bing roads map from [Bing maps](https://www.bingmapsportal.com/)
+__eox-sentinal2__ | EOX Sentinal-2 | Sentinal 2 imagery from [EOX IT Services GmbH](https://maps.eox.at/)
+__eox-sentinal2-labels__ | EOX Sentinal-2 with Labels | Sentinal 2 imagery with OpenStreetMap overlay from [EOX IT Services GmbH](https://maps.eox.at/)
+__eox-openstreetmap__ | EOX OpenStreetMap | OpenStreetMap from [EOX IT Services GmbH](https://maps.eox.at/)
 __renderables__ | Renderables | A general purpose layer for hosting shapes and markers
 __compass__ | Compass | A compass displayed in upper right
 __coordinates__ | Coordinates | View coordinates displayed on top or bottom of screen
