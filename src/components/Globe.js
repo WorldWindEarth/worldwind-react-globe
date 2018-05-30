@@ -104,6 +104,11 @@ export default class Globe extends Component {
     return Globe._categories;
   }
 
+  /**
+   * Predefined layer types used by addLayer(). An application is free to change 
+   * the values but not the keys. The values are used for the default 
+   * layer display names.
+   */
   static get layerTypes() {
     if (!Globe._layerTypes) {
       Globe._layerTypes = new Map();
@@ -116,6 +121,7 @@ export default class Globe extends Component {
       Globe._layerTypes.set('eox-sentinal2', 'EOX Sentinal-2');
       Globe._layerTypes.set('eox-sentinal2-labels', 'EOX Sentinal-2 with Labels');
       Globe._layerTypes.set('eox-openstreetmap', 'EOX OpenStreetMap');
+      Globe._layerTypes.set('renderables', 'Renderables');
       Globe._layerTypes.set('compass', 'Compass');
       Globe._layerTypes.set('coordinates', 'Coordinates');
       Globe._layerTypes.set('view-controls', 'View Controls');
@@ -214,21 +220,28 @@ export default class Globe extends Component {
     return wwLayer;
   }
 
+  /**
+   * Creates a layer based on a layerType key or value. Layer type keys must be 
+   * an exact match; partial strings may be used for layer type values. 
+   * @param {String} layerType A Globe.layerTypes key or value
+   * @returns {WorldWind.Layer|null}  
+   */
   createLayer(layerType) {
     let type = null;
 
     if (Globe.layerTypes.has(layerType)) {
+      // layerType is a key
       type = layerType;
     } else {
-      let findType = () => {
-        // Look for a entry that matches part of the layer type's description
+      // Look for a layer type value that matches the name in full or part
+      let findType = (name) => {
         for (let [key, value] of Globe.layerTypes.entries()) {
-          if (value.includes(layerType)) {
+          if (value.includes(name)) {
             return key;
           }
         }
       };
-      type = findType();
+      type = findType(layerType);
     }
     // Create the WorldWind.Layer object cooresponding to the layerType
     let layer = null;
@@ -261,6 +274,9 @@ export default class Globe extends Component {
       case 'eox-openstreetmap':
         layer = new EoxOpenStreetMapLayer();
         break;
+      case 'renderables':
+        layer = new WorldWind.RenderableLayer();
+        break;
       case 'compass':
         layer = new WorldWind.CompassLayer();
         break;
@@ -280,8 +296,10 @@ export default class Globe extends Component {
         layer = new WorldWind.ShowTessellationLayer();
         break;
       default:
-        console.error("Globe.createLayer('" + layerType + "'): layer type is not valid");
+        console.error("Globe.createLayer('" + layerType + "'): layer type does not match an entry in Globe.layerTypes");
+        return null;
     }
+    layer.displayName = Globe.layerTypes.get(type);
     return layer;
   }
 
