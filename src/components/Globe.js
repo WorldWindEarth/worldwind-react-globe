@@ -12,6 +12,8 @@ import EoxOpenStreetMapLayer from '../api/EoxOpenStreetMapLayer';
 import EoxSentinal2CloudlessLayer from '../api/EoxSentinal2CloudlessLayer';
 import EoxSentinal2WithLabelsLayer from '../api/EoxSentinal2WithLabelsLayer';
 import EnhancedAtmosphereLayer from '../api/EnhancedAtmosphereLayer';
+import UsgsTopoBaseMapLayer from '../api/UsgsTopoBaseMapLayer';
+import UsgsImageryTopoBaseMapLayer from '../api/UsgsImageryTopoBaseMapLayer';
 import styles from './Globe.css';
 
 /* global WorldWind */
@@ -121,6 +123,8 @@ export default class Globe extends Component {
       Globe._layerTypes.set('eox-sentinal2', 'EOX Sentinal-2');
       Globe._layerTypes.set('eox-sentinal2-labels', 'EOX Sentinal-2 with Labels');
       Globe._layerTypes.set('eox-openstreetmap', 'EOX OpenStreetMap');
+      Globe._layerTypes.set('usgs-topo', 'USGS Topographic');
+      Globe._layerTypes.set('usgs-imagery-topo', 'USGS Topographic Imagery');
       Globe._layerTypes.set('renderables', 'Renderables');
       Globe._layerTypes.set('compass', 'Compass');
       Globe._layerTypes.set('coordinates', 'Coordinates');
@@ -195,7 +199,7 @@ export default class Globe extends Component {
         }
       }
       if (!found) {
-        throw new Error("addLayer: 'category "+ wwLayer.category +"' is not a valid Globe.categories key");
+        throw new Error("addLayer: 'category " + wwLayer.category + "' is not a valid Globe.categories key");
       }
     }
 
@@ -258,12 +262,15 @@ export default class Globe extends Component {
         break;
       case 'bing-aerial':
         layer = new WorldWind.BingAerialLayer();
+        layer.detailControl = 1.25;
         break;
       case 'bing-aerial-labels':
         layer = new WorldWind.BingAerialWithLabelsLayer();
+        layer.detailControl = 1.25;
         break;
       case 'bing-roads':
         layer = new WorldWind.BingRoadsLayer();
+        layer.detailControl = 1.25;
         break;
       case 'eox-sentinal2':
         layer = new EoxSentinal2CloudlessLayer();
@@ -273,6 +280,14 @@ export default class Globe extends Component {
         break;
       case 'eox-openstreetmap':
         layer = new EoxOpenStreetMapLayer();
+        break;
+      case 'usgs-topo':
+        layer = new UsgsTopoBaseMapLayer();
+        layer.detailControl = 1.75;
+        break;
+      case 'usgs-imagery-topo':
+        layer = new UsgsImageryTopoBaseMapLayer();
+        layer.detailControl = 1.75;
         break;
       case 'renderables':
         layer = new WorldWind.RenderableLayer();
@@ -285,6 +300,14 @@ export default class Globe extends Component {
         break;
       case 'view-controls':
         layer = new WorldWind.ViewControlsLayer(this.wwd);
+        // Override the default placement to allow room for credits 
+        layer.placement = new WorldWind.Offset(WorldWind.OFFSET_PIXELS, 11, WorldWind.OFFSET_PIXELS, 11);
+        layer.showPanControl = false;
+        layer.showHeadingControl = true;
+        layer.showTiltControl = true;
+        layer.showZoomControl = true;
+        layer.showExaggerationControl = true;
+        layer.showFieldOfViewControl = false;
         break;
       case 'atmosphere-day-night':
         layer = new EnhancedAtmosphereLayer();
@@ -518,8 +541,8 @@ export default class Globe extends Component {
    */
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.latitude !== this.props.latitude ||
-        nextProps.longitude !== this.props.longitude ||
-        nextProps.altitude !== this.props.altitude) {
+      nextProps.longitude !== this.props.longitude ||
+      nextProps.altitude !== this.props.altitude) {
       this.goTo(nextProps.latitude, nextProps.longitude, nextProps.altitude);
     }
     // TODO: handle changes in the layers
@@ -602,10 +625,10 @@ export default class Globe extends Component {
     };
 
     return(
-        <canvas id={this.canvasId} style={style}>
-            Your browser does not support HTML5 Canvas.
-        </canvas>
-        );
+      <canvas id={this.canvasId} style={style}>
+          Your browser does not support HTML5 Canvas.
+      </canvas>
+      );
   }
 };
 
