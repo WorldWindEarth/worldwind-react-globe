@@ -19,11 +19,13 @@ export default class App extends Component {
   }
 
   render() {
-    // See Globe.layerTypes for a list of layer type identifiers
+    // See Globe.layerTypes for a list of predefined layers
     const layers = [
       "eox-sentinal2-labels",
       "coordinates",
-      "view-controls"
+      "view-controls",
+      "stars",
+      "atmosphere-day-night"
     ];
 
     return (
