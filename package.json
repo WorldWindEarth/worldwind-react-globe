@@ -1,7 +1,7 @@
 {
   "name": "worldwind-react-globe",
   "version": "0.5.0",
-  "description": "A virtual globe for React featuring maps, imagery and terrain plus 2D map projections using the Web WorldWind virtual globe SDK from NASA and ESA.",
+  "description": "An interactive globe for React featuring maps, imagery and terrain plus 2D map projections using the Web WorldWind virtual globe SDK from NASA and ESA.",
   "keywords": [
     "react",
     "react-component",
