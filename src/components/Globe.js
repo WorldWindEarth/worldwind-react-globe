@@ -6,7 +6,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import '@nasaworldwind/worldwind';
-
+import { observable } from "mobx";
+ 
 import WorldWindFixes from '../api/WorldWindFixes';
 import EoxOpenStreetMapLayer from '../api/EoxOpenStreetMapLayer';
 import EoxSentinal2CloudlessLayer from '../api/EoxSentinal2CloudlessLayer';
@@ -387,25 +388,25 @@ export default class Globe extends Component {
     this.publishUpdate(layer.category);
   }
 
-//    /**
-//     * Returns an observable containing the last update timestamp for the category.
-//     * @param {String} category
-//     * @returns {Observable} 
-//     */
-//    getCategoryTimestamp(category) {
-//        if (!this.categoryTimestamps.has(category)) {
-//            this.categoryTimestamps.set(category, observable.box(Date.now()));
-//        }
-//        return this.categoryTimestamps.get(category);
-//    }
+    /**
+     * Returns an observable containing the last update timestamp for the category.
+     * @param {String} category
+     * @returns {Observable} 
+     */
+    getCategoryTimestamp(category) {
+        if (!this.categoryTimestamps.has(category)) {
+            this.categoryTimestamps.set(category, observable.box(Date.now()));
+        }
+        return this.categoryTimestamps.get(category);
+    }
 
   /**
    * Updates the timestamp for the given category.
    * @param {String} category
    */
   updateCategoryTimestamp(category) {
-//        let timestamp = this.getCategoryTimestamp(category);
-//        timestamp.set(Date.now());  // observable
+        let timestamp = this.getCategoryTimestamp(category);
+        timestamp.set(Date.now());  // observable
   }
 
   publishUpdate(category) {
