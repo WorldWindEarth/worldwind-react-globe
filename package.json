@@ -1,7 +1,7 @@
 {
   "name": "worldwind-react-globe",
-  "version": "0.5.0",
-  "description": "A NASA WorldWind 3D virtual globe for React featuring maps, imagery and terrain plus 2D map projections.",
+  "version": "0.6.0",
+  "description": "An interactive globe for React featuring maps, imagery and terrain plus 2D map projections using the Web WorldWind virtual globe SDK from NASA and ESA.",
   "keywords": [
     "react",
     "react-component",
@@ -43,6 +43,8 @@
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
+    "mobx": "^4.2.1",
+    "mobx-react": "^5.1.2",
     "react": "^15.0.0 || ^16.0.0",
     "react-dom": "^15.0.0 || ^16.0.0"
   },
@@ -63,6 +65,8 @@
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "gh-pages": "^1.1.0",
+    "mobx": "^4.2.1",
+    "mobx-react": "^5.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "^1.1.1",
