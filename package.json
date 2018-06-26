@@ -18,13 +18,13 @@
     "nasa",
     "esa"
   ],
-  "homepage": "https://emxsys.github.io/worldwind-react-globe",
+  "homepage": "https://earthviewer.github.io/worldwind-react-globe",
   "bugs": "https://github.com/emxsys/worldwind-react-globe/issues",
   "author": "Bruce Schubert",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emxsys/worldwind-react-globe.git"
+    "url": "https://github.com/EarthViewer/worldwind-react-globe.git"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -39,7 +39,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "@nasaworldwind/worldwind": "^0.9.0"
+    "@nasaworldwind/worldwind": "git+https://github.com/EarthViewer/WebWorldWind.git#develop"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
