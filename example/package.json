@@ -1,7 +1,7 @@
 {
   "name": "worldwind-react-globe-example",
   "homepage": "https://emxsys.github.io/worldwind-react-globe",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "license": "MIT",
   "dependencies": {
