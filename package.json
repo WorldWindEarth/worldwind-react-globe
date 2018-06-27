@@ -40,7 +40,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "@nasaworldwind/worldwind": "git+https://github.com/EarthViewer/WebWorldWind.git#develop"
+    "@nasaworldwind/worldwind": "git+https://github.com/EarthViewer/WebWorldWind.git#master"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
