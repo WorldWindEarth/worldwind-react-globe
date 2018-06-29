@@ -769,17 +769,17 @@ var WorldWindFixes = function () {
                  */
                 WorldWind.KmlPlacemark.prototype.prepareAttributes = function (style) {
                     var options = style && style.generate() || { normal: {}, highlight: {} };
-                    var placemarkAttributes = new PlacemarkAttributes(WorldWind.KmlStyle.placemarkAttributes(options));
+                    var placemarkAttributes = new WorldWind.PlacemarkAttributes(WorldWind.KmlStyle.placemarkAttributes(options));
 
-                    placemarkAttributes.imageOffset = new Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, 0.0);
-                    placemarkAttributes.imageColor = Color.WHITE;
-                    placemarkAttributes.labelAttributes = new TextAttributes(WorldWind.KmlStyle.textAttributes({
-                        _offset: new Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, -0.3),
+                    placemarkAttributes.imageOffset = new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, 0.0);
+                    placemarkAttributes.imageColor = WorldWind.Color.WHITE;
+                    placemarkAttributes.labelAttributes = new WorldWind.TextAttributes(WorldWind.KmlStyle.textAttributes({
+                        _offset: new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, -0.3),
                         _color: WorldWind.Color.YELLOW,
                         _depthTest: true
                     }));
                     placemarkAttributes.drawLeaderLine = true;
-                    placemarkAttributes.leaderLineAttributes = new ShapeAttributes(WorldWind.KmlStyle.shapeAttributes({
+                    placemarkAttributes.leaderLineAttributes = new WorldWind.ShapeAttributes(WorldWind.KmlStyle.shapeAttributes({
                         outlineColor: WorldWind.Color.RED
                     }));
 
