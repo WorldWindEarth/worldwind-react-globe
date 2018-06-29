@@ -484,6 +484,36 @@ export default class WorldWindFixes {
                 xhr.send(null);
             };
 
+
+            /**
+             * Prepare attributes for displaying the Placemark.
+             * @param style {KmlStyle} Style altering the defaults.
+             * @returns {PlacemarkAttributes} Attributes representing the current Placemark.
+             */
+            WorldWind.KmlPlacemark.prototype.prepareAttributes = function (style) {
+                var options = style && style.generate() || {normal: {}, highlight:{}};
+                var placemarkAttributes = new PlacemarkAttributes(WorldWind.KmlStyle.placemarkAttributes(options));
+
+                placemarkAttributes.imageOffset = new Offset(
+                    WorldWind.OFFSET_FRACTION, 0.5,
+                    WorldWind.OFFSET_FRACTION, 0.0);
+                placemarkAttributes.imageColor = Color.WHITE;
+                placemarkAttributes.labelAttributes = new TextAttributes(WorldWind.KmlStyle.textAttributes({
+                    _offset: new Offset(
+                        WorldWind.OFFSET_FRACTION, 0.5,
+                        WorldWind.OFFSET_FRACTION, -0.3),
+                    _color: WorldWind.Color.YELLOW,
+                    _depthTest: true
+                }));
+                placemarkAttributes.drawLeaderLine = true;
+                placemarkAttributes.leaderLineAttributes = new ShapeAttributes(WorldWind.KmlStyle.shapeAttributes({
+                    outlineColor: WorldWind.Color.RED
+                }));
+
+                return placemarkAttributes;
+            };
+           
+            
         } // end if 0.9.0
         WorldWindFixes.isLibraryFixed = true;
     }
