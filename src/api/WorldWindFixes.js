@@ -491,8 +491,8 @@ export default class WorldWindFixes {
              * @returns {PlacemarkAttributes} Attributes representing the current Placemark.
              */
             WorldWind.KmlPlacemark.prototype.prepareAttributes = function (style) {
-                var options = style && style.generate() || {normal: {}, highlight:{}};
-                var placemarkAttributes = new WorldWind.PlacemarkAttributes(WorldWind.KmlStyle.placemarkAttributes(options));
+                let options = style && style.generate() || {normal: {}, highlight:{}};
+                let placemarkAttributes = new WorldWind.PlacemarkAttributes(WorldWind.KmlStyle.placemarkAttributes(options));
 
                 placemarkAttributes.imageOffset = new WorldWind.Offset(
                     WorldWind.OFFSET_FRACTION, 0.5,
@@ -501,7 +501,7 @@ export default class WorldWindFixes {
                 placemarkAttributes.labelAttributes = new WorldWind.TextAttributes(WorldWind.KmlStyle.textAttributes({
                     _offset: new WorldWind.Offset(
                         WorldWind.OFFSET_FRACTION, 0.5,
-                        WorldWind.OFFSET_FRACTION, -0.3),
+                        WorldWind.OFFSET_FRACTION, -0.35),
                     _color: WorldWind.Color.YELLOW,
                     _depthTest: true
                 }));

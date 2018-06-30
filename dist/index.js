@@ -779,7 +779,7 @@ var WorldWindFixes = function () {
                     placemarkAttributes.imageOffset = new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, 0.0);
                     placemarkAttributes.imageColor = WorldWind.Color.WHITE;
                     placemarkAttributes.labelAttributes = new WorldWind.TextAttributes(WorldWind.KmlStyle.textAttributes({
-                        _offset: new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, -0.3),
+                        _offset: new WorldWind.Offset(WorldWind.OFFSET_FRACTION, 0.5, WorldWind.OFFSET_FRACTION, -0.35),
                         _color: WorldWind.Color.YELLOW,
                         _depthTest: true
                     }));
