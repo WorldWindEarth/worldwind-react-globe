@@ -484,6 +484,36 @@ export default class WorldWindFixes {
                 xhr.send(null);
             };
 
+
+            /**
+             * Prepare attributes for displaying the Placemark.
+             * @param style {KmlStyle} Style altering the defaults.
+             * @returns {PlacemarkAttributes} Attributes representing the current Placemark.
+             */
+            WorldWind.KmlPlacemark.prototype.prepareAttributes = function (style) {
+                let options = style && style.generate() || {normal: {}, highlight:{}};
+                let placemarkAttributes = new WorldWind.PlacemarkAttributes(WorldWind.KmlStyle.placemarkAttributes(options));
+
+                placemarkAttributes.imageOffset = new WorldWind.Offset(
+                    WorldWind.OFFSET_FRACTION, 0.5,
+                    WorldWind.OFFSET_FRACTION, 0.0);
+                placemarkAttributes.imageColor = WorldWind.Color.WHITE;
+                placemarkAttributes.labelAttributes = new WorldWind.TextAttributes(WorldWind.KmlStyle.textAttributes({
+                    _offset: new WorldWind.Offset(
+                        WorldWind.OFFSET_FRACTION, 0.5,
+                        WorldWind.OFFSET_FRACTION, -0.35),
+                    _color: WorldWind.Color.YELLOW,
+                    _depthTest: true
+                }));
+                placemarkAttributes.drawLeaderLine = true;
+                placemarkAttributes.leaderLineAttributes = new WorldWind.ShapeAttributes(WorldWind.KmlStyle.shapeAttributes({
+                    outlineColor: WorldWind.Color.RED
+                }));
+
+                return placemarkAttributes;
+            };
+           
+            
         } // end if 0.9.0
         WorldWindFixes.isLibraryFixed = true;
     }

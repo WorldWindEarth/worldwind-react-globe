@@ -1,7 +1,8 @@
 {
   "name": "worldwind-react-globe",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "description": "An interactive globe for React featuring maps, imagery and terrain plus 2D map projections using the Web WorldWind virtual globe SDK from NASA and ESA.",
+  "private": true,
   "keywords": [
     "react",
     "react-component",
@@ -18,13 +19,13 @@
     "nasa",
     "esa"
   ],
-  "homepage": "https://emxsys.github.io/worldwind-react-globe",
+  "homepage": "https://earthviewer.github.io/worldwind-react-globe",
   "bugs": "https://github.com/emxsys/worldwind-react-globe/issues",
   "author": "Bruce Schubert",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/emxsys/worldwind-react-globe.git"
+    "url": "https://github.com/EarthViewer/worldwind-react-globe.git"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -39,7 +40,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "@nasaworldwind/worldwind": "^0.9.0"
+    "@nasaworldwind/worldwind": "git+https://github.com/EarthViewer/WebWorldWind.git#develop"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
@@ -55,30 +56,30 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "cross-env": "^5.1.6",
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
-    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-react": "^7.10.0",
     "eslint-plugin-standard": "^3.0.1",
-    "gh-pages": "^1.1.0",
-    "mobx": "^4.2.1",
-    "mobx-react": "^5.1.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "gh-pages": "^1.2.0",
+    "mobx": "^4.3.1",
+    "mobx-react": "^5.2.3",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-scripts": "^1.1.1",
-    "react-test-renderer": "^16.4.0",
+    "react-test-renderer": "^16.4.1",
     "rollup": "^0.54.0",
-    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-babel": "^3.0.5",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-peer-deps-external": "^2.0.0",
-    "rollup-plugin-postcss": "^1.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-postcss": "^1.6.2",
     "rollup-plugin-url": "^1.3.0",
-    "webgl-mock": "^0.1.6"
+    "webgl-mock": "^0.1.7"
   },
   "files": [
     "dist"

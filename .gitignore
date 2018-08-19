@@ -6,7 +6,6 @@ node_modules
 
 # builds
 build
-dist
 
 # misc
 .DS_Store
@@ -21,4 +20,3 @@ yarn-debug.log*
 yarn-error.log*
 /nbproject/private/
 /example/nbproject/
-/nbproject/
