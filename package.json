@@ -2,7 +2,7 @@
   "name": "worldwind-react-globe",
   "version": "0.8.0",
   "description": "An interactive globe for React featuring maps, imagery and terrain plus 2D map projections using the Web WorldWind virtual globe SDK from NASA and ESA.",
-  "private": true,
+  "private": false,
   "keywords": [
     "react",
     "react-component",
@@ -19,13 +19,13 @@
     "nasa",
     "esa"
   ],
-  "homepage": "https://earthviewer.github.io/worldwind-react-globe",
+  "homepage": "https://emxsys.github.io/worldwind-react-globe",
   "bugs": "https://github.com/emxsys/worldwind-react-globe/issues",
   "author": "Bruce Schubert",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EarthViewer/worldwind-react-globe.git"
+    "url": "https://github.com/emxsys/worldwind-react-globe.git"
   },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -40,7 +40,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "@nasaworldwind/worldwind": "git+https://github.com/EarthViewer/WebWorldWind.git#develop"
+    "worldwindjs": "git+https://github.com/emxsys/worldwindjs.git#semver:v1.2.90"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",

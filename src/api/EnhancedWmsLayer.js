@@ -3,7 +3,7 @@
  * The MIT License
  * http://www.opensource.org/licenses/mit-license
  */
-import '@nasaworldwind/worldwind';
+import 'worldwindjs'; //WorldWind global
 
 /* global WorldWind */
 export default class EnhancedWmsLayer extends WorldWind.WmsLayer {

@@ -5,7 +5,7 @@
  */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import '@nasaworldwind/worldwind';
+import 'worldwindjs'; // WorldWind
 import { observable } from "mobx";
  
 import WorldWindFixes from '../api/WorldWindFixes';
