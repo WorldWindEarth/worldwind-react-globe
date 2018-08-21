@@ -12,7 +12,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "^1.1.1",
-    "worldwind-react-globe": "git+https://github.com/emxsys/worldwind-react-globe.git"
+    "worldwind-react-globe": "git+https://github.com/emxsys/worldwind-react-globe.git#master"
   },
   "scripts": {
     "start": "react-scripts start",
