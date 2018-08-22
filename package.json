@@ -1,6 +1,6 @@
 {
   "name": "worldwind-react-globe",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An interactive globe for React featuring maps, imagery and terrain plus 2D map projections using the Web WorldWind virtual globe SDK from NASA and ESA.",
   "private": false,
   "keywords": [
@@ -40,7 +40,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "worldwindjs": "git+https://github.com/emxsys/worldwindjs.git#semver:v1.2.90"
+    "worldwindjs": "git+https://github.com/emxsys/worldwindjs.git#semver:^1.3.90"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
