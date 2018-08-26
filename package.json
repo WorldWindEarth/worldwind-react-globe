@@ -40,7 +40,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
-    "worldwindjs": "git+https://github.com/emxsys/worldwindjs.git#semver:^1.3.90"
+    "worldwindjs": "git+https://github.com/emxsys/worldwindjs.git#semver:v1.5.90"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
@@ -60,20 +60,20 @@
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-config-standard-react": "^6.0.0",
-    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-standard": "^3.0.1",
     "gh-pages": "^1.2.0",
-    "mobx": "^4.3.1",
-    "mobx-react": "^5.2.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "^1.1.1",
-    "react-test-renderer": "^16.4.1",
+    "mobx": "^4.3.2",
+    "mobx-react": "^5.2.5",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "^1.1.5",
+    "react-test-renderer": "^16.4.2",
     "rollup": "^0.54.0",
-    "rollup-plugin-babel": "^3.0.5",
+    "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^8.2.1",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-peer-deps-external": "^2.2.0",
