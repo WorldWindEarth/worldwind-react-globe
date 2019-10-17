@@ -1,8 +1,8 @@
-# worldwind-react-globe 
+# worldwind-react-globe
 
 > A 3D globe for React featuring maps, imagery and terrain plus 2D map projections using the [Web WorldWind](https://github.com/NASAWorldWind/WebWorldWind) virtual globe SDK from [NASA and ESA](https://worldwind.arc.nasa.gov/web/).
 >
-> [Demo](https://emxsys.github.io/worldwind-react-globe/)
+> [Demo](https://worldwind.earth/worldwind-react-globe/)
 
 [![NPM](https://img.shields.io/npm/v/worldwind-react-globe.svg)](https://www.npmjs.com/package/worldwind-react-globe) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -37,9 +37,9 @@ class App extends Component {
 
 Creates a Globe that fills the page.
 
-- Adds layers to the Globe using [layer type keys](#predefined-layer-types) 
+- Adds layers to the Globe using [layer type keys](#predefined-layer-types)
 defined in `Globe.layerTypes`
-- Sets the startup latitude and longitude coordinates (in decimal degrees)and 
+- Sets the startup latitude and longitude coordinates (in decimal degrees)and
 the eye/camera altitude (in meters)
 
 ##### App.js
@@ -62,12 +62,12 @@ export default class App extends Component {
 
     return (
       <div className='fullscreen'>
-        <Globe 
+        <Globe
           ref={this.globeRef}
           layers={layers}
           latitude={34.2}
           longitude={-119.2}
-          altitude={10e6} 
+          altitude={10e6}
         />
       </div>
     )
@@ -90,9 +90,9 @@ export default class App extends Component {
 
 Creates a Globe that fills the page.
 
-- Adds layers to the Globe using [layer type keys](#predefined-layer-types) 
+- Adds layers to the Globe using [layer type keys](#predefined-layer-types)
 defined in `Globe.layerTypes`
-- Sets and changes the globe's latitude and longitude coordinates and the 
+- Sets and changes the globe's latitude and longitude coordinates and the
 eye/camera altitude via the component's state.
 - Uses a `ref` object to get a references to the Globe
 
@@ -124,11 +124,11 @@ export default class App extends Component {
     ];
     return (
       <div className='fullscreen'>
-        <Globe 
+        <Globe
           layers={layers}
           latitude={this.state.lat}
           longitude={this.state.lon}
-          altitude={this.state.alt} 
+          altitude={this.state.alt}
         />
       </div>
     )
