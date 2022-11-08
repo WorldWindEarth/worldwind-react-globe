@@ -11,7 +11,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "^5.0.1",
     "worldwind-react-globe": "git+https://github.com/emxsys/worldwind-react-globe.git#master"
   },
   "scripts": {
